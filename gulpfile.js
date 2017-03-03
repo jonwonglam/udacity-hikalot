@@ -8,31 +8,32 @@ var gulp  = require('gulp'),
     uglify = require('gulp-uglify'),
     pump = require('pump');
 
-gulp.task('default', ['min-css', 'min-html', 'min-images', 'min-js', 'watch']);
+gulp.task('default', ['min-css', 'min-html', 'min-js', 'watch']);
 
 gulp.task('min-css', function() {
-  return gulp.src('app/*.css')
+  return gulp.src('src/styles/*.css')
     .pipe(cleanCSS({compatibility: '*'}))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/styles'));
 });
 
 gulp.task('min-html', function() {
-  return gulp.src('app/*.html')
+  return gulp.src('src/*.html')
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('min-js', function(cb) {
   pump([
-      gulp.src('app/*.js'),
+      gulp.src('src/js/*.js'),
       uglify(),
-      gulp.dest('dist')
+      gulp.dest('dist/js')
     ],
     cb
   );
 });
 
 gulp.task('watch', function() {
-  gulp.watch('app/*.css', ['min-css']);
-  gulp.watch('app/*.html', ['min-html']);
+  gulp.watch('src/styles/*.css', ['min-css']);
+  gulp.watch('src/js/*.js', ['min-js']);
+  gulp.watch('src/*.html', ['min-html']);
 });
