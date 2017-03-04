@@ -4,16 +4,24 @@
 var gulp  = require('gulp'),
     gutil = require('gulp-util'),
     cleanCSS = require('gulp-clean-css'),
+    sass = require('gulp-sass');
     htmlmin = require('gulp-htmlmin'),
     uglify = require('gulp-uglify'),
     pump = require('pump');
 
-gulp.task('default', ['min-css', 'min-html', 'min-js', 'watch']);
+gulp.task('default', ['min-sass', 'min-css', 'min-html', 'min-js', 'watch']);
 
 gulp.task('min-css', function() {
-  return gulp.src('src/styles/*.css')
+  return gulp.src('src/css/*.css')
     .pipe(cleanCSS({compatibility: '*'}))
-    .pipe(gulp.dest('dist/styles'));
+    .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('min-sass', function() {
+  return gulp.src('src/css/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(cleanCSS({compatibility: '*'}))
+        .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('min-html', function() {
@@ -33,7 +41,7 @@ gulp.task('min-js', function(cb) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('src/styles/*.css', ['min-css']);
+  gulp.watch('src/css/*.css', ['min-css']);
   gulp.watch('src/js/*.js', ['min-js']);
   gulp.watch('src/*.html', ['min-html']);
 });
