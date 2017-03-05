@@ -41,6 +41,7 @@ gulp.task('min-js', function(cb) {
 });
 
 gulp.task('watch', function() {
+  gulp.watch('src/css/*.scss', ['min-sass']);
   gulp.watch('src/css/*.css', ['min-css']);
   gulp.watch('src/js/*.js', ['min-js']);
   gulp.watch('src/*.html', ['min-html']);
