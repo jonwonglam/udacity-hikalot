@@ -68,6 +68,7 @@ After getting the details done, I moved on to turning the requirements into a la
 **Coding**
 
 This is where I am at now, but the basic plan I'm folliwing is to:
+
 1. Create a basic HTML layout with CSS
 2. Incorperate Google Maps API
 3. Setup inputs, tied to Knockout.js
