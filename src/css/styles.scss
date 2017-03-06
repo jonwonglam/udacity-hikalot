@@ -1,10 +1,17 @@
 // Colors
 $primary-color: #3ca25b;
 $accent-color: #157540;
+$accent-color-light: #167c43;
+$shadow-color: #a8bad1;
 $sidebar-bg: #f1f4f6;
+$subtitle-color: #8d8d8d;
+$filter-btn: #e5e8ed;
+$filter-btn-text: #6d6e70;
 
-body {
-  font-family: 'Helvetica Neue';
+body,
+button,
+input {
+  font-family: 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -19,9 +26,12 @@ button:focus {
 // HEADER BAR STYLES
 
 .header-bar {
+  position: relative;
   height: 80px;
   padding: 0 30px;
   background-color: $primary-color;
+  box-shadow: 0 0px 20px $shadow-color;
+  z-index: 20;
 }
 
 .logo {
@@ -61,13 +71,19 @@ h2 a {
   }
 
   button {
-    display: inline-block;
     border: none;
     border-radius: 0 5px 5px 0;
     background-color: $accent-color;
+    cursor: pointer;
     color: #fff;
     width: 45px;
     height: 40px;
+    position: relative;
+    z-index: 2;
+
+    &:hover {
+      box-shadow: 0 0 15px $accent-color-light;
+    }
   }
 
   .input-text-group {
@@ -91,19 +107,51 @@ h2 a {
 // SIDEBAR STYLES
 
 .sidebar {
-  // width: 600px;
-  // min-width: 400px;
+  width: 30vw;
+  min-width: 300px;
   min-height: calc(100vh - 80px);
   background-color: $sidebar-bg;
+  box-shadow: 2px 0 20px $shadow-color;
+  position: relative;
+  z-index: 5
 }
 
 .filters {
-  height: 300px;
   background-color: #fff;
+  padding: 0 40px;
+}
+
+.filter-title {
+  color: $subtitle-color;
+  font: 500 0.8em 'Helvetica Neue';
+  text-transform: uppercase;
+  padding-top: 20px;
+}
+
+.filter-btn {
+  border: none;
+  border-radius: 3px;
+  background-color: rgba($filter-btn, 0.6);
+  color: $filter-btn-text;
+  cursor: pointer;
+  font: 500 0.9em 'Helvetica Neue';
+  padding: 8px 15px;
+  margin-right: 5px;
+
+  &:hover {
+    background-color: rgba($filter-btn, 0.9);
+  }
+}
+
+.results {
+  width: 400px;
 }
 
 // MAP STYLES
 
 .map {
-
+  width: calc(100% - 30vw);
+  height: calc(100vh - 80px);
+  position: relative;
+  z-index: 1;
 }

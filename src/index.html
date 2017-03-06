@@ -6,8 +6,8 @@
     <title>Hikalot</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/styles.css" media="none" onload="if(media!='all')media='all'">
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css" media="none" onload="if(media!='all')media='all'">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:900" media="none" onload="if(media!='all')media='all'">
   </head>
   <body>
@@ -25,26 +25,24 @@
           </div>
           <h2 class="ml-auto p-2"><a href="#">Sign in / Sign up</a></h2>
       </div>
-      <div class="row">
-        <div class="col-3 sidebar">
-          <div class="row">
-            <div class="col-12 filters">
-              <p>Sort by</p>
+      <div class="row d-flex flex-row">
+        <div class="sidebar">
+            <div class="filters">
+              <p class="filter-title">Sort by</p>
               <div>
-                <input type="button" name="" value="Rating">
-                <input type="button" name="" value="Reviews">
-                <input type="button" name="" value="Trail Length">
+                <input class="filter-btn" type="button" name="" value="Rating">
+                <input class="filter-btn" type="button" name="" value="Reviews">
+                <input class="filter-btn" type="button" name="" value="Trail Length">
               </div>
               <div class="trail-range">
-                <p>Trail Length</p>
+                <p class="filter-title">Trail Length</p>
                 <input type="range" name="" value="">
               </div>
-              <p>Filter by</p>
+              <p class="filter-title">Filter by</p>
               <input type="text" name="" value="Name...">
-            </div>
           </div>
           <div class="row">
-            <div class="col-12">
+            <div class="">
               <div class="result">
                 <img src="" alt="">
                 <div class="result-text">
@@ -61,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div id="map" class="col-9">
+        <div id="map" class="map">
 
         </div>
       </div>
