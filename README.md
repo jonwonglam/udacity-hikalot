@@ -11,6 +11,7 @@ Hikalot
 
 ### Building the app
 Requirements: [Node.js](https://nodejs.org/en/) must be installed for the npm package manager.
+
 1. Clone or download the repo.
 2. Navigate to the repo.
 ```bash
@@ -67,7 +68,7 @@ After getting the details done, I moved on to turning the requirements into a la
 
 **Coding**
 
-This is where I am at now, but the basic plan I'm folliwing is to:
+This is where I am at now, but the basic plan I'm following is to:
 
 1. Create a basic HTML layout with CSS
 2. Incorperate Google Maps API
