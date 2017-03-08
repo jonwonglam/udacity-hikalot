@@ -993,7 +993,6 @@ function closure ( target, options, originalOptions ){
 				formattedValue = options.tooltips[handleNumber].to(unencoded[handleNumber]);
 			}
 
-      console.log(formattedValue);
       // Edited for Hikalot
       if ( formattedValue == '0 mi' ) {
         formattedValue = '< 1 mi';

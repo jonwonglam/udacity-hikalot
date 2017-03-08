@@ -120,11 +120,12 @@ h2 a {
 .sidebar {
   width: 30vw;
   min-width: 300px;
-  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
   background-color: $sidebar-bg;
   box-shadow: 2px 0 20px $shadow-color;
   position: relative;
-  z-index: 5
+  z-index: 5;
+  overflow: scroll;
 }
 
 .filters {
@@ -240,7 +241,7 @@ h2 a {
 // RESULTS SYLES
 
 .results {
-  // padding-top: 20px;
+  // overflow: scroll;
 }
 
 .result {
@@ -258,8 +259,8 @@ h2 a {
 
   img {
     border-radius: 6px;
-    width: 15%;
-    height: 15%;
+    width: 4vw;
+    height: 4vw;
   }
 
   .result-title {
