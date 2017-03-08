@@ -1,7 +1,8 @@
 // Colors
 $primary-color: #3ca25b;
-$accent-color: #157540;
-$accent-color-light: #167c43;
+$primary-accent-color: #157540;
+$primary-accent-color-light: #167c43;
+$secondary-color: #4bc470;
 $shadow-color: #a8bad1;
 $sidebar-bg: #f1f4f6;
 $subtitle-color: #8d8d8d;
@@ -14,6 +15,16 @@ input {
   font-family: 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
 }
 
 input:focus,
@@ -73,7 +84,7 @@ h2 a {
   button {
     border: none;
     border-radius: 0 5px 5px 0;
-    background-color: $accent-color;
+    background-color: $primary-accent-color;
     cursor: pointer;
     color: #fff;
     width: 45px;
@@ -82,25 +93,25 @@ h2 a {
     z-index: 2;
 
     &:hover {
-      box-shadow: 0 0 15px $accent-color-light;
+      box-shadow: 0 0 15px $primary-accent-color-light;
     }
   }
+}
 
-  .input-text-group {
-    position: relative;
-  }
+.input-text-group {
+  position: relative;
+}
 
-  .current-location {
-    position: absolute;
-    right: 10px;
-    top: 2px;
-    font-size: 18px;
-    opacity: 0.4;
-    padding: 5px;
+.input-text-icon {
+  position: absolute;
+  right: 10px;
+  top: 2px;
+  font-size: 18px;
+  opacity: 0.4;
+  padding: 5px;
 
-    &:hover {
-      opacity: 0.8;
-    }
+  &:hover {
+    opacity: 0.8;
   }
 }
 
@@ -119,6 +130,7 @@ h2 a {
 .filters {
   background-color: #fff;
   padding: 0 45px;
+  padding-bottom: 25px;
 }
 
 .filter-title {
@@ -143,71 +155,152 @@ h2 a {
   }
 }
 
-.filter-range {
+.filter-input-text {
   border: none;
+  box-shadow: 0 2px 7px rgba($shadow-color, 0.6);
+  color: $subtitle-color;
+  padding: 10px 15px;
   width: 100%;
-}
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
 
-.rkmd-slider {
-  &.slider-discrete {
-    .slider {
-      .slider-handle {
-        position: relative;
-        z-index: 1;
-
-        .slider-label {
-          position: absolute;
-          top: -17.5px;
-          left: -2px;
-          width: 30px;
-          height: 30px;
-          transform-origin: 50% 100%;
-          border-radius: 50%;
-          transform: scale(.5) rotate(-45deg);
-          transition: all .2s ease;
-
-          span {
-            position: absolute;
-            top: 7px;
-            left: 0px;
-            width: 100%;
-            color: #fff;
-            font-size: 12px;
-            text-align: center;
-            transform: rotate(45deg);
-            opacity: 0;
-            user-select: none;
-          }
-        }
-
-        &.is-active {
-          top: 0px;
-          margin-left: -2px;
-          width: 4px;
-          height: 4px;
-
-          .slider-label {
-            top: -15px;
-            left: -2px;
-            border-radius: 15px 15px 15px 0;
-            transform: rotate(-45deg) translate(23px, -25px);
-
-            span {
-              opacity: 1;
-            }
-          }
-        }
-      }
-    }
-
-    &.slider-lightBlue {
-      .slider-label { background-color: $primary-color; }
-    }
+  &:focus {
+    background-color: #f2f4f8;
+    box-shadow: none;
   }
 }
 
+.trail-range {
+  margin-bottom: 50px;
+}
+
+// FILTER RANGE STYLES
+
+.noUi-horizontal {
+  height: 7px;
+}
+
+.noUi-target {
+  background: #f0f0f0;
+  border-radius: 2px;
+  border: none;
+}
+
+.noUi-connect {
+  background: $secondary-color;
+  box-shadow: none;
+  -webkit-transition: background 450ms;
+  transition: background 450ms;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 18px;
+  height: 18px;
+  left: -9px;
+  top: -6px;
+}
+
+.noUi-handle {
+  border: none;
+  border-radius: 100px;
+  background: $secondary-color;
+  cursor: pointer;
+  box-shadow: 0 1px 3px $shadow-color;
+}
+
+.noUi-tooltip {
+  display: block;
+  border: none;
+  background: none;
+  position: absolute;
+  color: $secondary-color;
+  font: 600 12px 'Helvetica Neue';
+  text-align: center;
+  padding: 10px;
+  width: 60px;
+}
+.noUi-horizontal .noUi-tooltip {
+  -webkit-transform: translate(-50%, 170%);
+  transform: translate(-50%, 170%);
+}
+
+.noUi-pips {
+  position: absolute;
+  color: #fff;
+}
+
+.noUi-marker-large {
+  background: #bababa;
+}
+
+.noUi-marker-horizontal.noUi-marker-large {
+  height: 4px;
+  width: 1px;
+}
+
+// RESULTS SYLES
+
 .results {
-  width: 400px;
+  // padding-top: 20px;
+}
+
+.result {
+  position: relative;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba($shadow-color, 0.8);
+  margin: 15px 15px;
+  padding: 15px 10px;
+  width: calc(100% - 30px);
+
+  .result-text-container {
+    padding: 0 10px;
+  }
+
+  img {
+    border-radius: 6px;
+    width: 15%;
+    height: 15%;
+  }
+
+  .result-title {
+    font: 500 1.05em 'Helvetica Neue';
+    margin-bottom: 3px;
+  }
+
+  .result-subtitle {
+    color: $subtitle-color;
+    font: 400 0.8em 'Helvetica Neue';
+  }
+
+  .result-details {
+    margin-top: 5px;
+
+    h5 {
+      color: $secondary-color;
+      font: 400 0.8em 'Helvetica Neue';
+      padding-right: 20px;
+    }
+  }
+
+  .result-icon {
+    color: $secondary-color;
+    font-size: 0.8em;
+    margin-right: 5px;
+  }
+
+  .rating {
+    position: absolute;
+    top: 10px;
+    right: 13px;
+    border-radius: 3px;
+    background-color: $secondary-color;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 32px;
+    width: 32px;
+    height: 32px;
+  }
 }
 
 // MAP STYLES

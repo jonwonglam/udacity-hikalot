@@ -14,9 +14,9 @@ Requirements: [Node.js](https://nodejs.org/en/) must be installed for the npm pa
 
 1. Clone or download the repo.
 2. Navigate to the repo.
-```bash
-$> cd your_folder/udacity-hikalot
-```
+    ```bash
+    $> cd your_folder/udacity-hikalot
+    ```
 3. Run `npm install` to get all the required dependencies.
 4. Run `gulp` to start the build tools.
 5. Open `dist/index.html`.

@@ -8,9 +8,11 @@ var gulp = require('gulp'),
     htmlmin = require('gulp-htmlmin'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    del = require('del');
 
-    gulp.task('default', ['min-sass', 'min-css', 'min-html', 'min-js', 'watch']);
+    gulp.task('default', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'move-js', 'watch']);
+    gulp.task('production', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'min-js']);
 
 // min-css will concatinate all the css files in src/css, clean it,
 // and minify it, renamed to styles.min.css. This is to reduce the number
@@ -43,8 +45,13 @@ gulp.task('min-html', function() {
         .pipe(gulp.dest('dist'));
 });
 
+gulp.task('move-js', function() {
+  return gulp.src('src/js/*.js')
+        .pipe(gulp.dest('dist/js'));
+});
+
 gulp.task('min-js', function() {
-    return gulp.src('src/js/*js')
+    return gulp.src('src/js/*.js')
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest('dist/js'))
         .pipe(rename('scripts.min.js'))
@@ -52,9 +59,15 @@ gulp.task('min-js', function() {
         .pipe(gulp.dest('dist/js'));
 });
 
+gulp.task('clean:dist', function() {
+    return del([
+      'dist/js/**/*'
+    ]);
+});
+
 gulp.task('watch', function() {
     gulp.watch('src/css/*.scss', ['min-sass']);
     gulp.watch('src/css/*.css', ['min-css']);
-    gulp.watch('src/js/*.js', ['min-js']);
+    gulp.watch('src/js/*.js', ['move-js']);
     gulp.watch('src/*.html', ['min-html']);
 });

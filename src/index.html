@@ -6,58 +6,69 @@
     <title>Hikalot</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css" media="none" onload="if(media!='all')media='all'">
+    <link rel="stylesheet" href="css/styles.min.css" media="none" onload="if(media!='all')media='all'">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:900" media="none" onload="if(media!='all')media='all'">
   </head>
   <body>
-
-    <link href="https://fonts.googleapis.com/css?family=Lato:900" rel="stylesheet">
     <div class="container-fluid">
       <div class="header-bar row flex-row align-items-center justify-content-start">
           <h1 class="logo p-2">Hikalot</h1>
           <div class="header-search input-group">
             <div class="input-text-group">
               <input type="text" name="" placeholder="I want to hike near..." value="">
-              <span class="current-location"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+              <span class="input-text-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
             </div>
             <button class="btn" type="submit" name="button"><i class="fa fa-search" aria-hidden="true"></i></button>
           </div>
           <h2 class="ml-auto p-2"><a href="#">Sign in / Sign up</a></h2>
       </div>
-      <div class="row d-flex flex-row">
+      <div class="row flex-row">
         <div class="sidebar">
             <div class="filters">
               <p class="filter-title">Sort by</p>
               <div>
-                <input class="filter-btn" type="button" name="" value="Rating">
-                <input class="filter-btn" type="button" name="" value="Reviews">
-                <input class="filter-btn" type="button" name="" value="Trail Length">
+                <input class="filter-btn" type="button" value="Rating">
+                <input class="filter-btn" type="button" value="Reviews">
+                <input class="filter-btn" type="button" value="Trail Length">
               </div>
               <div class="trail-range">
                 <p class="filter-title">Trail Length</p>
-                <div class="rkmd-slider slider-discrete slider-lightBlue">
-                  <input class="filter-range" type="range" min="0" max="9" steps="1" name="" value="1">
-                </div>
+                <div id="filter-range" class=""></div>
               </div>
               <p class="filter-title">Filter by</p>
-              <input type="text" name="" value="Name...">
-          </div>
-          <div class="row">
-            <div class="">
-              <div class="result">
-                <img src="" alt="">
-                <div class="result-text">
-                  <h3>1. Sawer Camp Trail</h3>
-                  <h4>Water Dog Lake Park, Belmont</h4>
-                  <div class="result-details">
-                    <h5>365 reviews</h5>
-                    <h5>6.2 miles round trip</h5>
-                  </div>
-                  <span class="rating">9.1</span>
-                </div>
-
+              <div class="input-text-group">
+                <input class="filter-input-text" type="text" placeholder="Name..." value="">
+                <span class="input-text-icon"><i class="fa fa-times" aria-hidden="true"></i></span>
               </div>
+          </div>
+          <div id="results" class="">
+            <div class="result d-flex">
+              <img src="https://igx.4sqi.net/img/general/600x600/M5qB7gASK84KZAjV2biE8TmbH0uzM9wdPqF4O1WnxIo.jpg" alt="">
+              <div class="result-text-container">
+                <h3 class="result-title">1. Sawer Camp Trail</h3>
+                <h4 class="result-subtitle">Water Dog Lake Park, Belmont</h4>
+                <div class="result-details d-flex align-items-center">
+                  <span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>
+                  <h5>365 reviews</h5>
+                  <span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>
+                  <h5>6.2 miles round trip</h5>
+                </div>
+              </div>
+              <div class="rating">9.1</div>
+            </div>
+            <div class="result d-flex">
+              <img src="https://igx.4sqi.net/img/general/600x600/M5qB7gASK84KZAjV2biE8TmbH0uzM9wdPqF4O1WnxIo.jpg" alt="">
+              <div class="result-text-container">
+                <h3 class="result-title">1. Sawer Camp Trail</h3>
+                <h4 class="result-subtitle">Water Dog Lake Park, Belmont</h4>
+                <div class="result-details d-flex align-items-center">
+                  <span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>
+                  <h5>365 reviews</h5>
+                  <span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>
+                  <h5>6.2 miles round trip</h5>
+                </div>
+              </div>
+              <div class="rating">9.1</div>
             </div>
           </div>
         </div>
@@ -67,10 +78,12 @@
       </div>
     </div>
 
-    <!-- Bootstrap first, then knockout.js -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
-    <script type='text/javascript' src='js/knockout-3.4.1.js'></script>
-    <script type="text/javascript" src='js/map.js'></script>
+    <!-- <script type='text/javascript' src='js/scripts.min.js'></script> -->
+    <script src="js/nouislider.js"></script>
+    <script src="js/wNumb.js"></script>
+    <script src="js/knockout-3.4.1.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/app.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6i-RpAAVY9ArUTiDD6kd9Bzk_d-urzo&v=3&callback=initMap">
     </script>
