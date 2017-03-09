@@ -68,7 +68,7 @@ var App = function() {
         // console.log(msg);
         viewModal.parseResults(msg.response);
         viewModal.sortByRating();
-        setMarkers();   // From map.js
+        setMarkers();   // From map.js, initialize the markers after data loaded
       });
   }
 };
@@ -76,6 +76,7 @@ var App = function() {
 // The Result functional object takes in a json object from
 // Foursquare's API and parses it for the app to use.
 var Result = function(data) {
+  this.id = ko.observable(0);
   this.title = data.venue.name;
   this.address = data.venue.location.address || 'No address';
   this.city = data.venue.location.city;
@@ -95,10 +96,11 @@ var Result = function(data) {
 var ViewModel = function() {
   var self = this;
 
+  // Our array to hold all the parsed results
   this.resultList = ko.observableArray([]);
 
   // This function will parse the json data object into result objects,
-  // updating the resultList array.
+  // updating the resultList array as it goes.
   this.parseResults = function(data) {
     console.log(data);
     let results = data.groups[0].items;
@@ -106,39 +108,52 @@ var ViewModel = function() {
     results.forEach(function(resultData) {
       self.resultList.push(new Result(resultData));
     });
-    console.log(self.resultList()[0]);
+    console.log(self.resultList()[0]);  // For debugging
   };
 
-  // Filter functions
+  // Filter functions: they will sort by a criteria and update
+  // the result IDs and set the CSS on buttons.
   this.sortByRating = function() {
-    clearBtnClasses();
-    $('#ratingsBtn').addClass('filter-btn-selected');
+    setBtnClasses('#ratingsBtn');
     self.resultList.sort(function(a, b) {
       return (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
     });
+    updateResultID();
   }
 
   this.sortByCheckins = function() {
-    clearBtnClasses();
+    setBtnClasses('#checkinsBtn');
     $('#checkinsBtn').addClass('filter-btn-selected');
     self.resultList.sort(function(a,b) {
       return (a.checkins === b.checkins) ? 0 : (a.checkins > b.checkins ? -1 : 1);
     });
+    updateResultID();
+  }
+
+  // This function will update the result IDs based off of their
+  // position in the array. Called by the sorting functions.
+  function updateResultID() {
+    for (var i = 0; i < self.resultList().length; i++) {
+      self.resultList()[i].id(i + 1);
+    }
   }
 }
 
-// Helper function to format numbers with commas.
+// Helper function to format numbers with commas. (10000 -> 10,000)
 var checkinFormat = wNumb({
   thousand: ','
 });
 
-var clearBtnClasses = function() {
+// Helper function removes selected class from buttons and adds it
+// to the button id passed in.
+function setBtnClasses(selectedBtn) {
   $('#ratingsBtn').removeClass('filter-btn-selected');
   $('#checkinsBtn').removeClass('filter-btn-selected');
   $('#trailLengthBtn').removeClass('filter-btn-selected');
+  $(selectedBtn).addClass('filter-btn-selected');
 }
 
-// We setup our App and ViewModal instances.
+// Setup and start our App and ViewModal instances.
 var app = new App();
 var viewModal = new ViewModel();
 app.init();

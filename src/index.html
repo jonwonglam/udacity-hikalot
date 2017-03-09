@@ -45,7 +45,7 @@
             <div class="result d-flex">
               <img class="result-img" data-bind="attr: { src: imgSrc}" alt="result picture">
               <div class="result-text-container">
-                <h3 class="result-title" data-bind="text: title"></h3>
+                <h3 class="result-title" data-bind="text: id() + '. ' + $data.title"></h3>
                 <h4 class="result-subtitle" data-bind="text: address"></h4>
                 <h4 class="result-subtitle" data-bind="text: city"></h4>
                 <div class="result-details d-flex align-items-center">

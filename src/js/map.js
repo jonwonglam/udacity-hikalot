@@ -25,9 +25,10 @@ function setMarkers() {
         path: 'M10,2A5,5,0,0,0,5,7c0,4.77,5,11,5,11s5-6.23,5-11A5,5,0,0,0,10,2Z',
         fillColor: '#000',
         fillOpacity: 0.8,
-        scale: 1.8,
+        scale: 2.5,
         strokeColor: '#484e56',
-        strokeWeight: 1
+        strokeWeight: 1,
+        labelOrigin: new google.maps.Point(10, 8)
       };
 
   var result;
@@ -39,6 +40,12 @@ function setMarkers() {
     var marker = new google.maps.Marker({
       map: map,
       position: result.location,
+      label: {
+        text: result.id() + '',
+        color: 'white',
+        fontSize: '12px',
+        fontWeight: '500'
+      },
       name: result.title,
       imgSrc: result.imgSrc,
       address: result.address,
@@ -47,8 +54,7 @@ function setMarkers() {
       rating: result.rating,
       url: result.url,
       icon: locationIcon,
-      animation: google.maps.Animation.Drop,
-      id: i
+      // animation: google.maps.Animation.Drop,
     });
 
     // Add marker to the list
@@ -73,7 +79,7 @@ function populateInfoWindow(marker, infoWindow, onCloseEvent) {
       '<div class=" d-flex">' +
         '<img class="result-img" src="' + marker.imgSrc + '">' +
         '<div class="result-text-container">' +
-          '<h3 class="result-title">' + marker.name + '</h3>' +
+          '<h3 class="result-title">' + marker.label.text + '. ' + marker.name + '</h3>' +
           '<h4 class="result-subtitle">' + marker.address + '</h4>' +
           '<h4 class="result-subtitle">' + marker.city + '</h4>' +
           '<div class="result-details d-flex align-items-center">' +
