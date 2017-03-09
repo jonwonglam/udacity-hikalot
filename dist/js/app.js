@@ -10,14 +10,13 @@ var App = function() {
   let location = 'San Francisco, CA';
   let query = 'trails'
   let url = 'https://api.foursquare.com/v2/venues/explore?near=' + location +
-      '&query=' + query + '&venuePhotos=1';
+      '&query=' + query + '&venuePhotos=1&limit=40';
 
   // This function will load the map, setup the sidebar, and make a request
   // to the Foursquare API
   this.init = function() {
     initSidebar();
     makeRequest();
-    viewModal.sortByRating();
   }
 
   // This function will add noUiSlider to the HTML as part of the app's initialization,
@@ -68,6 +67,8 @@ var App = function() {
       .done(function( msg ) {
         // console.log(msg);
         viewModal.parseResults(msg.response);
+        viewModal.sortByRating();
+        setMarkers();   // From map.js
       });
   }
 };
@@ -81,12 +82,14 @@ var Result = function(data) {
   this.rating = data.venue.rating;
   this.checkins = data.venue.stats.checkinsCount;
   this.checkinsFormat = checkinFormat.to(this.checkins) + ' checkins';
-  this.imgSrc = data.venue.featuredPhotos.items[0].prefix + 'original'+
-    data.venue.featuredPhotos.items[0].suffix;
   this.url = data.tips[0].canonicalUrl;
+  this.imgSrc = data.venue.featuredPhotos.items[0].prefix + 'original'+
+  data.venue.featuredPhotos.items[0].suffix;
   this.trailLength = 0;
-
-  console.log(this);
+  this.location = {
+    lat: data.venue.location.lat,
+    lng: data.venue.location.lng
+  };
 }
 
 var ViewModel = function() {
@@ -103,9 +106,10 @@ var ViewModel = function() {
     results.forEach(function(resultData) {
       self.resultList.push(new Result(resultData));
     });
+    console.log(self.resultList()[0]);
   };
 
-  // Filter function
+  // Filter functions
   this.sortByRating = function() {
     clearBtnClasses();
     $('#ratingsBtn').addClass('filter-btn-selected');
