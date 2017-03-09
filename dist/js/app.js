@@ -10,7 +10,7 @@ var App = function() {
   let location = 'San Francisco, CA';
   let query = 'trails'
   let url = 'https://api.foursquare.com/v2/venues/explore?near=' + location +
-      '&query=' + query + '&venuePhotos=1&limit=40';
+      '&query=' + query + '&venuePhotos=1';
 
   // This function will load the map, setup the sidebar, and make a request
   // to the Foursquare API

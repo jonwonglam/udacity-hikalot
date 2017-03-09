@@ -5,9 +5,7 @@ Hikalot
 ![alt tag](./hikalot.jpg)
 
 # Quickstart
-### Running the app
-1. Clone or download the repo
-2. Open `dist/index.html` to load the app.
+Checkout the latest version on [Gthub Pages](https://jonwonglam.github.io/udacity-hikalot/).
 
 ### Building the app
 Requirements: [Node.js](https://nodejs.org/en/) must be installed for the npm package manager.
