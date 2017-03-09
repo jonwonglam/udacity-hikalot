@@ -262,56 +262,63 @@ h2 a {
   margin: 15px 15px;
   padding: 15px 10px;
   width: calc(100% - 30px);
+}
 
-  .result-text-container {
-    padding: 0 10px;
-  }
+.result-text-container {
+  padding: 0 10px;
+}
 
-  img {
-    border-radius: 6px;
-    width: 4vw;
-    height: 4vw;
-  }
+.result-img {
+  border-radius: 6px;
+  width: 4vw;
+  height: 4vw;
+}
 
-  .result-title {
-    font: 500 1.05em 'Helvetica Neue';
-    margin-bottom: 3px;
-  }
+.result-title {
+  font: 500 1.05em 'Helvetica Neue';
+  margin-bottom: 3px;
+}
 
-  .result-subtitle {
-    color: $subtitle-color;
-    font: 400 0.8em 'Helvetica Neue';
-  }
+.result-subtitle {
+  color: $subtitle-color;
+  font: 400 0.8em 'Helvetica Neue';
+}
 
-  .result-details {
-    margin-top: 5px;
+.result-details {
+  margin-top: 5px;
 
-    h5 {
-      color: $secondary-color;
-      font: 400 0.8em 'Helvetica Neue';
-      padding-right: 20px;
-    }
-  }
-
-  .result-icon {
+  h5 {
     color: $secondary-color;
-    font-size: 0.8em;
-    margin-right: 5px;
+    font: 400 0.8em 'Helvetica Neue';
+    padding-right: 20px;
   }
+}
 
-  .rating {
-    position: absolute;
-    top: 10px;
-    right: 13px;
-    border-radius: 3px;
-    background-color: $secondary-color;
-    color: #fff;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 32px;
-    width: 32px;
-    height: 32px;
-  }
+.result-icon {
+  color: $secondary-color;
+  font-size: 0.8em;
+  margin-right: 5px;
+}
+
+.result-link {
+  margin-top: 10px;
+  padding-top: 5px;
+  width: 100%;
+  border-top: solid 1px rgba($shadow-color, 0.6);
+}
+
+.rating {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  border-radius: 3px;
+  background-color: $secondary-color;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 // MAP STYLES
