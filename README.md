@@ -5,7 +5,7 @@ Hikalot
 ![alt tag](./hikalot.jpg)
 
 # Quickstart
-Checkout the latest version on [Gthub Pages](https://jonwonglam.github.io/udacity-hikalot/).
+Checkout the latest version on [Github Pages](https://jonwonglam.github.io/udacity-hikalot/).
 
 ### Building the app
 Requirements: [Node.js](https://nodejs.org/en/) must be installed for the npm package manager.
