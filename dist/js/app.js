@@ -17,6 +17,7 @@ var App = function() {
   this.init = function() {
     initSidebar();
     makeRequest();
+    viewModal.sortByRating();
   }
 
   // This function will add noUiSlider to the HTML as part of the app's initialization,
@@ -78,7 +79,8 @@ var Result = function(data) {
   this.address = data.venue.location.address || 'No address';
   this.city = data.venue.location.city;
   this.rating = data.venue.rating;
-  this.checkins = checkinFormat.to(data.venue.stats.checkinsCount) + ' checkins';
+  this.checkins = data.venue.stats.checkinsCount;
+  this.checkinsFormat = checkinFormat.to(this.checkins) + ' checkins';
   this.imgSrc = data.venue.featuredPhotos.items[0].prefix + 'original'+
     data.venue.featuredPhotos.items[0].suffix;
   this.url = data.tips[0].canonicalUrl;
@@ -105,11 +107,18 @@ var ViewModel = function() {
 
   // Filter function
   this.sortByRating = function() {
+    clearBtnClasses();
+    $('#ratingsBtn').addClass('filter-btn-selected');
     self.resultList.sort(function(a, b) {
-      console.log(a.rating + ',' + b.rating);
-      var val = (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
-      console.log(val);
-      return val;
+      return (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
+    });
+  }
+
+  this.sortByCheckins = function() {
+    clearBtnClasses();
+    $('#checkinsBtn').addClass('filter-btn-selected');
+    self.resultList.sort(function(a,b) {
+      return (a.checkins === b.checkins) ? 0 : (a.checkins > b.checkins ? -1 : 1);
     });
   }
 }
@@ -118,6 +127,12 @@ var ViewModel = function() {
 var checkinFormat = wNumb({
   thousand: ','
 });
+
+var clearBtnClasses = function() {
+  $('#ratingsBtn').removeClass('filter-btn-selected');
+  $('#checkinsBtn').removeClass('filter-btn-selected');
+  $('#trailLengthBtn').removeClass('filter-btn-selected');
+}
 
 // We setup our App and ViewModal instances.
 var app = new App();

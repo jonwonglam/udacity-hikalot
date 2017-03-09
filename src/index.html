@@ -27,9 +27,9 @@
             <div class="filters">
               <p class="filter-title">Sort by</p>
               <div>
-                <button class="filter-btn" data-bind="click: sortByRating">Rating</button>
-                <button class="filter-btn">Checkins</button>
-                <button class="filter-btn">Trail Length</button>
+                <button id="ratingsBtn" class="filter-btn" data-bind="click: sortByRating">Rating</button>
+                <button id="checkinsBtn" class="filter-btn" data-bind="click: sortByCheckins">Checkins</button>
+                <button id="trailLengthBtn" class="filter-btn">Trail Length</button>
               </div>
               <div class="trail-range">
                 <p class="filter-title">Trail Length</p>
@@ -50,7 +50,7 @@
                 <h4 class="result-subtitle" data-bind="text: city"></h4>
                 <div class="result-details d-flex align-items-center">
                   <span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>
-                  <h5 data-bind="text: checkins"></h5>
+                  <h5 data-bind="text: checkinsFormat"></h5>
                   <span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>
                   <h5>6.2 miles round trip</h5>
                 </div>

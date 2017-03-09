@@ -156,6 +156,16 @@ h2 a {
   }
 }
 
+.filter-btn.filter-btn-selected {
+  background-color: $secondary-color;
+  box-shadow: 0 0 15px rgba($secondary-color, 0.6);
+  color: #fff;
+
+  &:hover {
+
+  }
+}
+
 .filter-input-text {
   border: none;
   box-shadow: 0 2px 7px rgba($shadow-color, 0.6);
