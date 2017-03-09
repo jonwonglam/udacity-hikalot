@@ -66,21 +66,23 @@ var App = function() {
     })
       .done(function( msg ) {
         // console.log(msg);
-        vm.parseResults(msg.response);
+        viewModal.parseResults(msg.response);
       });
   }
 };
 
+// The Result functional object takes in a json object from
+// Foursquare's API and parses it for the app to use.
 var Result = function(data) {
-  this.title = ko.observable(data.venue.name);
-  this.address = ko.observable(data.venue.location.address || 'No address');
-  this.city = ko.observable(data.venue.location.city);
-  this.rating = ko.observable(data.venue.rating);
-  this.checkins = ko.observable(checkinFormat.to(data.venue.stats.checkinsCount) + ' checkins');
-  this.imgSrc = ko.observable(data.venue.featuredPhotos.items[0].prefix + 'original' +
-    data.venue.featuredPhotos.items[0].suffix);
-  this.url = ko.observable(data.tips[0].canonicalUrl);
-  this.trailLength = ko.observable(0);
+  this.title = data.venue.name;
+  this.address = data.venue.location.address || 'No address';
+  this.city = data.venue.location.city;
+  this.rating = data.venue.rating;
+  this.checkins = checkinFormat.to(data.venue.stats.checkinsCount) + ' checkins';
+  this.imgSrc = data.venue.featuredPhotos.items[0].prefix + 'original'+
+    data.venue.featuredPhotos.items[0].suffix;
+  this.url = data.tips[0].canonicalUrl;
+  this.trailLength = 0;
 
   console.log(this);
 }
@@ -101,6 +103,15 @@ var ViewModel = function() {
     });
   };
 
+  // Filter function
+  this.sortByRating = function() {
+    self.resultList.sort(function(a, b) {
+      console.log(a.rating + ',' + b.rating);
+      var val = (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
+      console.log(val);
+      return val;
+    });
+  }
 }
 
 // Helper function to format numbers with commas.
@@ -110,6 +121,6 @@ var checkinFormat = wNumb({
 
 // We setup our App and ViewModal instances.
 var app = new App();
-var vm = new ViewModel();
+var viewModal = new ViewModel();
 app.init();
-ko.applyBindings(vm);
+ko.applyBindings(viewModal);

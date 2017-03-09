@@ -27,7 +27,7 @@
             <div class="filters">
               <p class="filter-title">Sort by</p>
               <div>
-                <button class="filter-btn">Rating</button>
+                <button class="filter-btn" data-bind="click: sortByRating">Rating</button>
                 <button class="filter-btn">Checkins</button>
                 <button class="filter-btn">Trail Length</button>
               </div>
@@ -43,19 +43,19 @@
           </div>
           <div id="results" class="results" data-bind="foreach: resultList">
             <div class="result d-flex">
-              <img src="" data-bind="attr: { src: $data.imgSrc}" alt="result picture">
+              <img src="" data-bind="attr: { src: imgSrc}" alt="result picture">
               <div class="result-text-container">
-                <h3 class="result-title" data-bind="text: $data.title"></h3>
-                <h4 class="result-subtitle" data-bind="text: $data.address"></h4>
-                <h4 class="result-subtitle" data-bind="text: $data.city"></h4>
+                <h3 class="result-title" data-bind="text: title"></h3>
+                <h4 class="result-subtitle" data-bind="text: address"></h4>
+                <h4 class="result-subtitle" data-bind="text: city"></h4>
                 <div class="result-details d-flex align-items-center">
                   <span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>
-                  <h5 data-bind="text: $data.checkins"></h5>
+                  <h5 data-bind="text: checkins"></h5>
                   <span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>
                   <h5>6.2 miles round trip</h5>
                 </div>
               </div>
-              <div class="rating" data-bind="text: $data.rating"></div>
+              <div class="rating" data-bind="text: rating"></div>
             </div>
           </div>
         </div>
