@@ -2,6 +2,7 @@ var map;
 
 var markers = [];
 var largeInfowindow, hoverInfowindow;
+var autocomplete, place;
 
 // Function is called when the maps API script is loaded
 function initMap() {
@@ -15,8 +16,42 @@ function initMap() {
           position: google.maps.ControlPosition.TOP_LEFT
       },
   });
+  // Setup autocomplete in the location searchbar
+  initAutocomplete()
   // Populate the marker list now that the map is loaded.
   setMarkers();
+}
+
+function initAutocomplete() {
+  var input = document.getElementById('location-input');
+  autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  autocomplete.addListener('place_changed', function() {
+    place = autocomplete.getPlace();
+  });
+}
+
+function searchPlace() {
+  // Close the any infowindos that are open
+  hoverInfowindow.close();
+  largeInfowindow.close();
+  console.log(place);
+  if (!place.geometry) {
+    // User entered the name of a Place that was not suggested and
+    // pressed the Enter key, or the Place Details request failed.
+    window.alert("No details available for input: '" + place.name + "'");
+    return;
+  }
+
+  // If the place has a geometry, then present it on a map.
+  if (place.geometry.viewport) {
+    console.log("setting viewport");
+    map.fitBounds(place.geometry.viewport);
+  } else {
+    console.log("setting map");
+    map.setCenter(place.geometry.location);
+    map.setZoom(17);  // Why 17? Because it looks good.
+  }
 }
 
 // Reset and populate marker list, pulling data from resultList in

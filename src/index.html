@@ -15,7 +15,7 @@
           <h1 class="logo p-2">Hikalot</h1>
           <div class="header-search input-group">
             <div class="input-text-group">
-              <input type="text" name="" placeholder="I want to hike near..." value="">
+              <input id="location-input" type="text" placeholder="I want to hike near...">
               <span class="input-text-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
             </div>
             <button class="btn" type="submit" name="button"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -73,7 +73,7 @@
     <script src="js/map.js"></script>
     <script src="js/app.js"></script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6i-RpAAVY9ArUTiDD6kd9Bzk_d-urzo&v=3&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6i-RpAAVY9ArUTiDD6kd9Bzk_d-urzo&v=3&libraries=places&callback=initMap">
     </script>
   </body>
 </html>

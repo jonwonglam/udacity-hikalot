@@ -76,9 +76,16 @@ h2 a {
     color: #101010;
     font-size: 16px;
     padding-left: 13px;
+    padding-right: 42px;
     min-width: 250px;
     width: 20vw;
     height: 40px;
+    transition: width 0.25s ease, background-color 0.45s ease;
+
+    &:focus {
+      width: 25vw;
+      background-color: #fff;
+    }
   }
 
   button {

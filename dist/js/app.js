@@ -15,8 +15,17 @@ var App = function() {
   // This function will load the map, setup the sidebar, and make a request
   // to the Foursquare API
   this.init = function() {
+    initHeader();
     initSidebar();
     makeRequest();
+  }
+
+  function initHeader() {
+    $('#location-input').keyup(function(event) {
+      if (event.keyCode == 13) {
+        searchPlace();
+      }
+    });
   }
 
   // This function will add noUiSlider to the HTML as part of the app's initialization,
