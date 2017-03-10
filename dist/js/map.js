@@ -2,7 +2,7 @@ var map;
 
 var markers = [];
 var largeInfowindow, hoverInfowindow;
-var autocomplete, place;
+var autocomplete, geocoder;
 
 // Function is called when the maps API script is loaded
 function initMap() {
@@ -17,41 +17,53 @@ function initMap() {
       },
   });
   // Setup autocomplete in the location searchbar
-  initAutocomplete()
+  initSearch()
   // Populate the marker list now that the map is loaded.
   setMarkers();
 }
 
-function initAutocomplete() {
+function initSearch() {
   var input = document.getElementById('location-input');
   autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
-  autocomplete.addListener('place_changed', function() {
-    place = autocomplete.getPlace();
-  });
+  geocoder = new google.maps.Geocoder();
 }
 
 function searchPlace() {
   // Close the any infowindos that are open
   hoverInfowindow.close();
   largeInfowindow.close();
-  console.log(place);
-  if (!place.geometry) {
-    // User entered the name of a Place that was not suggested and
-    // pressed the Enter key, or the Place Details request failed.
-    window.alert("No details available for input: '" + place.name + "'");
-    return;
-  }
 
-  // If the place has a geometry, then present it on a map.
-  if (place.geometry.viewport) {
-    console.log("setting viewport");
-    map.fitBounds(place.geometry.viewport);
-  } else {
-    console.log("setting map");
-    map.setCenter(place.geometry.location);
-    map.setZoom(17);  // Why 17? Because it looks good.
-  }
+  // Lookup address and get lat lng
+  var val = $('#location-input').val();
+  geocodeAddress(val, geocoder, map, app);
+
+  // // If the place has a geometry, then present it on a map.
+  // if (place.geometry.viewport) {
+  //   console.log("setting viewport");
+  //   map.fitBounds(place.geometry.viewport);
+  // } else {
+  //   console.log("setting map");
+  //   map.setCenter(place.geometry.location);
+  //   map.setZoom(17);  // Why 17? Because it looks good.
+  // }
+}
+
+function geocodeAddress(address, geocoder, resultsMap, app) {
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      // resultsMap.setCenter(results[0].geometry.location);
+      app.location = results[0].formatted_address;
+      console.log(app.location);
+      app.url = 'https://api.foursquare.com/v2/venues/explore?near=' + app.location +
+          '&query=' + app.query + '&venuePhotos=1';
+
+      console.log(app.url);
+      app.makeRequest();
+    } else {
+      alert("Sorry, Google couldn't find that location.");
+    }
+  });
 }
 
 // Reset and populate marker list, pulling data from resultList in
@@ -139,7 +151,7 @@ function populateInfoWindow(marker, infoWindow, onCloseEvent) {
       '<div>' +
       '<div class="rating">' + marker.rating + '</div>' +
     '</div>' + '</div>' + '</div>' +
-    '<div class="result-link">' + '<a href="' + marker.url + '">See on Foursquare</a>' + '</div>'
+    '<div class="result-link">' + '<a target="_blank" href="https://foursquare.com/v/' + marker.url + '">See on Foursquare</a>' + '</div>'
   );
   // Display the infowindow
   infoWindow.open(map, marker);
