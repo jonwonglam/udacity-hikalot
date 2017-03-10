@@ -119,6 +119,7 @@ var ViewModel = function() {
       return (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
     });
     updateResultID();
+    setMarkers();
   }
 
   this.sortByCheckins = function() {
@@ -128,6 +129,12 @@ var ViewModel = function() {
       return (a.checkins === b.checkins) ? 0 : (a.checkins > b.checkins ? -1 : 1);
     });
     updateResultID();
+    setMarkers();
+  }
+
+  this.showMarker = function(result) {
+    var index = result.id() - 1;
+    populateInfoWindow(markers[index], largeInfowindow, 'closeclick');
   }
 
   // This function will update the result IDs based off of their

@@ -42,7 +42,7 @@
               </div>
           </div>
           <div id="results" class="results" data-bind="foreach: resultList">
-            <div class="result d-flex">
+            <div class="result d-flex" data-bind="click: $parent.showMarker">
               <img class="result-img" data-bind="attr: { src: imgSrc}" alt="result picture">
               <div class="result-text-container">
                 <h3 class="result-title" data-bind="text: id() + '. ' + $data.title"></h3>
