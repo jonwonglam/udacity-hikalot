@@ -15,9 +15,17 @@ var App = function() {
   // This function will load the map, setup the sidebar, and make a request
   // to the Foursquare API
   this.init = function() {
+    initHeader();
     initSidebar();
     makeRequest();
-    viewModal.sortByRating();
+  }
+
+  function initHeader() {
+    $('#location-input').keyup(function(event) {
+      if (event.keyCode == 13) {
+        searchPlace();
+      }
+    });
   }
 
   // This function will add noUiSlider to the HTML as part of the app's initialization,
@@ -68,6 +76,8 @@ var App = function() {
       .done(function( msg ) {
         // console.log(msg);
         viewModal.parseResults(msg.response);
+        viewModal.sortByRating();
+        setMarkers();   // From map.js, initialize the markers after data loaded
       });
   }
 };
@@ -75,27 +85,32 @@ var App = function() {
 // The Result functional object takes in a json object from
 // Foursquare's API and parses it for the app to use.
 var Result = function(data) {
+  this.id = ko.observable(0);
   this.title = data.venue.name;
   this.address = data.venue.location.address || 'No address';
   this.city = data.venue.location.city;
   this.rating = data.venue.rating;
   this.checkins = data.venue.stats.checkinsCount;
   this.checkinsFormat = checkinFormat.to(this.checkins) + ' checkins';
-  this.imgSrc = data.venue.featuredPhotos.items[0].prefix + 'original'+
-    data.venue.featuredPhotos.items[0].suffix;
   this.url = data.tips[0].canonicalUrl;
+  this.imgSrc = data.venue.featuredPhotos.items[0].prefix + 'original'+
+  data.venue.featuredPhotos.items[0].suffix;
   this.trailLength = 0;
-
-  console.log(this);
+  this.location = {
+    lat: data.venue.location.lat,
+    lng: data.venue.location.lng
+  };
 }
 
 var ViewModel = function() {
   var self = this;
 
+  // Our array to hold all the parsed results
   this.resultList = ko.observableArray([]);
+  this.filter = ko.observable("");
 
   // This function will parse the json data object into result objects,
-  // updating the resultList array.
+  // updating the resultList array as it goes.
   this.parseResults = function(data) {
     console.log(data);
     let results = data.groups[0].items;
@@ -103,38 +118,83 @@ var ViewModel = function() {
     results.forEach(function(resultData) {
       self.resultList.push(new Result(resultData));
     });
+    console.log(self.resultList()[0]);  // For debugging
   };
 
-  // Filter function
+  // Filter functions: they will sort by a criteria and update
+  // the result IDs and set the CSS on buttons.
   this.sortByRating = function() {
-    clearBtnClasses();
-    $('#ratingsBtn').addClass('filter-btn-selected');
+    setBtnClasses('#ratingsBtn');
     self.resultList.sort(function(a, b) {
       return (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
     });
+    updateResultID();
+    setMarkers();
   }
 
   this.sortByCheckins = function() {
-    clearBtnClasses();
+    setBtnClasses('#checkinsBtn');
     $('#checkinsBtn').addClass('filter-btn-selected');
     self.resultList.sort(function(a,b) {
       return (a.checkins === b.checkins) ? 0 : (a.checkins > b.checkins ? -1 : 1);
     });
+    updateResultID();
+    setMarkers();
+  }
+
+  // This function will update our filteredItems list everytime the filter
+  // observable changes. It is based on resultList, but doesn't modify it
+  // directly. Thus our markers will be present, however the sidebar will be
+  // updated with the filtered results.
+  this.filteredItems = ko.computed(function() {
+    var filter = this.filter().toLowerCase();
+    // If our filter box is empty, return the original list
+    if (!filter) {
+      return self.resultList();
+    }
+    // Otherwise filter our array
+    else {
+      return ko.utils.arrayFilter(self.resultList(), function(result) {
+        return result.title.toLowerCase().includes(filter);
+      });
+    }
+  }, this);
+
+  this.clearFilter = function() {
+    self.filter("");
+  }
+
+  // This function will display the marker given a result index.
+  // Triggered by clicking a result in the sidebar.
+  this.showMarker = function(result) {
+    var index = result.id() - 1;
+    populateInfoWindow(markers[index], largeInfowindow, 'closeclick');
+  }
+
+  // This function will update the result IDs based off of their
+  // position in the array. Called by the sorting functions.
+  function updateResultID() {
+    for (var i = 0; i < self.resultList().length; i++) {
+      self.resultList()[i].id(i + 1);
+    }
   }
 }
 
-// Helper function to format numbers with commas.
+// Helper function to format numbers with commas. (10000 -> 10,000)
 var checkinFormat = wNumb({
   thousand: ','
 });
 
-var clearBtnClasses = function() {
+// Helper function removes selected class from buttons and adds it
+// to the button id passed in.
+function setBtnClasses(selectedBtn) {
   $('#ratingsBtn').removeClass('filter-btn-selected');
   $('#checkinsBtn').removeClass('filter-btn-selected');
   $('#trailLengthBtn').removeClass('filter-btn-selected');
+  $(selectedBtn).addClass('filter-btn-selected');
 }
 
-// We setup our App and ViewModal instances.
+// Setup and start our App and ViewModal instances.
 var app = new App();
 var viewModal = new ViewModel();
 app.init();
