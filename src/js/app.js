@@ -7,7 +7,7 @@ var App = function() {
   let CLIENT_SECRET = 'WJ0VZI2TE4AKYWPYQ11OASI0N3TXYYY52CZVEH12SX3EXX5X';
 
   // Variables to make a search request to the Foursquare API
-  this.location = 'San Francisco, CA';
+  this.location = '410 Winding Way, San Carlos, CA';
   this.query = 'trails'
   this.url = 'https://api.foursquare.com/v2/venues/explore?near=' + this.location +
       '&query=' + this.query + '&venuePhotos=1';
@@ -87,12 +87,12 @@ var App = function() {
 // The Result functional object takes in a json object from
 // Foursquare's API and parses it for the app to use.
 var Result = function(data) {
-  console.log(data);
+  // console.log(data);
   this.id = ko.observable(0);
   this.title = data.venue.name;
   this.address = data.venue.location.address || 'No address';
   this.city = data.venue.location.city;
-  this.rating = data.venue.rating;
+  this.rating = data.venue.rating || 0.0;
   this.checkins = data.venue.stats.checkinsCount;
   this.checkinsFormat = checkinFormat.to(this.checkins) + ' checkins';
   this.url = data.venue.id;
