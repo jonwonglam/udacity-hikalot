@@ -327,6 +327,7 @@ h2 a {
 .map {
   width: calc(100% - 30vw);
   height: calc(100vh - 80px);
+  min-width: 10vh;
   position: relative;
   z-index: 1;
 }

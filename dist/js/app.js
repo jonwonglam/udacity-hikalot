@@ -98,6 +98,7 @@ var ViewModel = function() {
 
   // Our array to hold all the parsed results
   this.resultList = ko.observableArray([]);
+  this.filter = ko.observable("");
 
   // This function will parse the json data object into result objects,
   // updating the resultList array as it goes.
@@ -132,6 +133,30 @@ var ViewModel = function() {
     setMarkers();
   }
 
+  // This function will update our filteredItems list everytime the filter
+  // observable changes. It is based on resultList, but doesn't modify it
+  // directly. Thus our markers will be present, however the sidebar will be
+  // updated with the filtered results.
+  this.filteredItems = ko.computed(function() {
+    var filter = this.filter().toLowerCase();
+    // If our filter box is empty, return the original list
+    if (!filter) {
+      return self.resultList();
+    }
+    // Otherwise filter our array
+    else {
+      return ko.utils.arrayFilter(self.resultList(), function(result) {
+        return result.title.toLowerCase().includes(filter);
+      });
+    }
+  }, this);
+
+  this.clearFilter = function() {
+    self.filter("");
+  }
+
+  // This function will display the marker given a result index.
+  // Triggered by clicking a result in the sidebar.
   this.showMarker = function(result) {
     var index = result.id() - 1;
     populateInfoWindow(markers[index], largeInfowindow, 'closeclick');

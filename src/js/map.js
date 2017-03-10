@@ -1,7 +1,7 @@
 var map;
 
 var markers = [];
-var largeInfowindow;
+var largeInfowindow, hoverInfowindow;
 
 // Function is called when the maps API script is loaded
 function initMap() {
@@ -25,16 +25,17 @@ function setMarkers() {
   // Bounds is used to fit the map view to include all our markers
   var bounds = new google.maps.LatLngBounds();
   // InfoWindow that is shown on mouseover events
-  var hoverInfowindow = new google.maps.InfoWindow();
+  hoverInfowindow = new google.maps.InfoWindow();
   // InfoWindow that is shown on sidebar click events
   largeInfowindow = new google.maps.InfoWindow();
   // Our custom marker icon
   var locationIcon = {
+        anchor: new google.maps.Point(11,17),
         path: 'M10,2A5,5,0,0,0,5,7c0,4.77,5,11,5,11s5-6.23,5-11A5,5,0,0,0,10,2Z',
-        fillColor: '#000',
-        fillOpacity: 0.8,
+        fillColor: '#4bc470',
+        fillOpacity: 0.9,
         scale: 2.5,
-        strokeColor: '#484e56',
+        strokeColor: '#38a659',
         strokeWeight: 1,
         labelOrigin: new google.maps.Point(10, 8)
       };
@@ -59,7 +60,7 @@ function setMarkers() {
       imgSrc: result.imgSrc,
       address: result.address,
       city: result.city,
-      checkins: result.checkins,
+      checkins: result.checkinsFormat,
       rating: result.rating,
       url: result.url,
       icon: locationIcon,
@@ -82,41 +83,43 @@ function setMarkers() {
 // This function will show the infoWindow for a given marker. We also
 // specify the close event here.
 function populateInfoWindow(marker, infoWindow, onCloseEvent) {
-  if (infoWindow.marker == null) {
-    infoWindow.marker = marker;
-    infoWindow.setContent(
-      '<div class=" d-flex">' +
-        '<img class="result-img" src="' + marker.imgSrc + '">' +
-        '<div class="result-text-container">' +
-          '<h3 class="result-title">' + marker.label.text + '. ' + marker.name + '</h3>' +
-          '<h4 class="result-subtitle">' + marker.address + '</h4>' +
-          '<h4 class="result-subtitle">' + marker.city + '</h4>' +
-          '<div class="result-details d-flex align-items-center">' +
-            '<span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>' +
-            '<h5>' + marker.checkins + '</h5>' +
-            '<span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>' +
-            '<h5>' + '6.2 miles round trip' + '</h5>' +
-          '</div>' +
-        '<div>' +
-        '<div class="rating">' + marker.rating + '</div>' +
-      '</div>' + '</div>' + '</div>' +
-      '<div class="result-link">' + '<a href="' + marker.url + '">See on Foursquare</a>' + '</div>'
-    );
-    // Display the infowindow
-    infoWindow.open(map, marker);
+  // Always close the existing infowindows first
+  hoverInfowindow.close();
+  largeInfowindow.close();
+  // Set the infoWindow on the marker
+  infoWindow.marker = marker;
+  infoWindow.setContent(
+    '<div class=" d-flex">' +
+      '<img class="result-img" src="' + marker.imgSrc + '">' +
+      '<div class="result-text-container">' +
+        '<h3 class="result-title">' + marker.label.text + '. ' + marker.name + '</h3>' +
+        '<h4 class="result-subtitle">' + marker.address + '</h4>' +
+        '<h4 class="result-subtitle">' + marker.city + '</h4>' +
+        '<div class="result-details d-flex align-items-center">' +
+          '<span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>' +
+          '<h5>' + marker.checkins + '</h5>' +
+          '<span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>' +
+          '<h5>' + '6.2 miles round trip' + '</h5>' +
+        '</div>' +
+      '<div>' +
+      '<div class="rating">' + marker.rating + '</div>' +
+    '</div>' + '</div>' + '</div>' +
+    '<div class="result-link">' + '<a href="' + marker.url + '">See on Foursquare</a>' + '</div>'
+  );
+  // Display the infowindow
+  infoWindow.open(map, marker);
 
-    marker.addListener(onCloseEvent, function() {
-      infoWindow.marker = null;
-    });
+  marker.addListener(onCloseEvent, function() {
+    infoWindow.marker = null;
+  });
 
-    infoWindow.addListener(onCloseEvent, function() {
-      // We only set the marker to null, we don't close it.
-      // This is so the user can click on the link. A better way to allow
-      // the user to click on the link would be to have an mouseover event
-      // attached to the infowindow as well.
-      infoWindow.marker = null;
-    })
-  }
+  infoWindow.addListener(onCloseEvent, function() {
+    // We only set the marker to null, we don't close it.
+    // This is so the user can click on the link. A better way to allow
+    // the user to click on the link would be to have an mouseover event
+    // attached to the infowindow as well.
+    infoWindow.marker = null;
+  })
 }
 
 // Sets the map on all markers in the array.
