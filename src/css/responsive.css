@@ -2,7 +2,11 @@
   .logo {
     display: none; }
   .header-bar {
-    padding: 0; }
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    padding: 0;
+    z-index: 20; }
   h2 a {
     display: none; }
   .header-search input {
@@ -13,6 +17,7 @@
   .header-search button {
     display: none; }
   .map-container {
+    margin-top: 80px;
     z-index: 1;
     position: fixed;
     width: 100%; }
@@ -25,14 +30,22 @@
     right: 20px;
     font-size: 1.3em;
     color: white; }
-  .results-container {
-    margin-top: 55vh;
-    z-index: 1; }
   .results {
     width: 100%;
+    height: auto;
+    overflow: auto;
+    margin-top: 0;
+    position: static;
     z-index: 3; }
   .filters {
-    display: none;
-    z-index: 50;
+    margin-top: 80px;
+    transform: translateY(-50vh);
+    z-index: 10;
     position: fixed;
-    width: 100%; } }
+    width: 100%;
+    transition: transform 0.5s ease; }
+  .slide-in {
+    transform: translateY(0); }
+  .spacer {
+    width: 100%;
+    height: 70vh; } }

@@ -181,6 +181,10 @@ var ViewModel = function() {
     populateInfoWindow(markers[index], largeInfowindow, 'closeclick');
   }
 
+  this.toggleFilters = function() {
+    $('#filters').toggleClass('slide-in');
+  }
+
   // This function will update the result IDs based off of their
   // position in the array. Called by the sorting functions.
   function updateResultID() {

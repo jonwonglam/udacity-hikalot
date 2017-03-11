@@ -4,7 +4,11 @@
   }
 
   .header-bar {
+    position: fixed;
+    width: 100%;
+    height: 80px;
     padding: 0;
+    z-index: 20;
   }
 
   h2 a {
@@ -26,6 +30,7 @@
 
   .map-container {
     // opacity: 0.99;
+    margin-top: 80px;
     z-index: 1;
     position: fixed;
     width: 100%;
@@ -45,22 +50,31 @@
     color: rgba(#fff, 1);
   }
 
-  .results-container {
-    // pointer-events: none;
-    margin-top: 55vh;
-    z-index: 1;
-  }
-
   .results {
     width: 100%;
+    height: auto;
+    overflow: auto;
+    margin-top: 0;
+    position: static;
     z-index: 3;
   }
 
   .filters {
-    display: none;
-    z-index: 50;
+    margin-top: 80px;
+    transform: translateY(-50vh);
+    z-index: 10;
     position: fixed;
     width: 100%;
+    transition: transform 0.5s ease;
+  }
+
+  .slide-in {
+    transform: translateY(0);
+  }
+
+  .spacer {
+    width: 100%;
+    height: 70vh;
   }
 
 
