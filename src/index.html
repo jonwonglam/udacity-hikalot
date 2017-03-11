@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/styles.min.css" media="none" onload="if(media!='all')media='all'">
+    <!-- <link rel="stylesheet" href="css/styles.mobile.min.css" media="(max-device-width: 780px)" onload="if(media!='all')media='all'"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:900" media="none" onload="if(media!='all')media='all'">
   </head>
   <body>
@@ -20,6 +21,7 @@
             </div>
             <button id="location-btn" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
           </div>
+          <button id="filter-btn"><i class="fa fa-sliders" aria-hidden="true"></i></button>
           <h2 class="ml-auto p-2"><a target="_blank" href="https://github.com/jonwonglam/udacity-hikalot">View on Github</a></h2>
       </div>
       <div class="row flex-row">
@@ -29,9 +31,9 @@
               <div>
                 <button id="ratingsBtn" class="filter-btn" data-bind="click: sortByRating">Rating</button>
                 <button id="checkinsBtn" class="filter-btn" data-bind="click: sortByCheckins">Checkins</button>
-                <button id="trailLengthBtn" class="filter-btn">Trail Length</button>
+                <button id="trailLengthBtn" class="filter-btn hide">Trail Length</button>
               </div>
-              <div class="trail-range">
+              <div class="trail-range hide">
                 <p class="filter-title">Trail Length</p>
                 <div id="filter-range" class=""></div>
               </div>
@@ -41,26 +43,29 @@
                 <span class="input-text-icon" data-bind="click: clearFilter"><i class="fa fa-times" aria-hidden="true"></i></span>
               </div>
           </div>
-          <div id="results" class="results" data-bind="foreach: filteredItems">
-            <div class="result d-flex" data-bind="click: $parent.showMarker">
-              <img class="result-img" data-bind="attr: { src: imgSrc}" alt="result picture">
-              <div class="result-text-container">
-                <h3 class="result-title" data-bind="text: id() + '. ' + $data.title"></h3>
-                <h4 class="result-subtitle" data-bind="text: address"></h4>
-                <h4 class="result-subtitle" data-bind="text: city"></h4>
-                <div class="result-details d-flex align-items-center">
-                  <span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>
-                  <h5 data-bind="text: checkinsFormat"></h5>
-                  <span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>
-                  <h5>6.2 miles round trip</h5>
+          <div class="results-container">
+            <div id="results" class="results" data-bind="foreach: filteredItems">
+              <div class="result d-flex" data-bind="click: $parent.showMarker">
+                <img class="result-img" data-bind="attr: { src: imgSrc}" alt="result picture">
+                <div class="result-text-container">
+                  <h3 class="result-title" data-bind="text: id() + '. ' + $data.title"></h3>
+                  <h4 class="result-subtitle" data-bind="text: address"></h4>
+                  <h4 class="result-subtitle" data-bind="text: city"></h4>
+                  <div class="result-details d-flex align-items-center">
+                    <span class="result-icon"><i class="fa fa-star" aria-hidden="true"></i></span>
+                    <h5 data-bind="text: checkinsFormat"></h5>
+                    <span class="result-icon"><i class="fa fa-blind" aria-hidden="true"></i></span>
+                    <h5>6.2 miles round trip</h5>
+                  </div>
                 </div>
+                <div class="rating" data-bind="text: rating"></div>
               </div>
-              <div class="rating" data-bind="text: rating"></div>
             </div>
           </div>
         </div>
-        <div id="map" class="map">
-
+        <div class="map-container">
+          <div id="map" style="width: 100%; height: 100%"></div>
+          <!-- <button id="search-area-btn" class="search-area"><i class="fa fa-repeat" aria-hidden="true"></i></button> -->
         </div>
       </div>
     </div>

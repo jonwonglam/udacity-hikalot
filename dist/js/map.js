@@ -12,9 +12,13 @@ function initMap() {
     center: {lat: 37.7749, lng: -122.4194},
     zoom: 12,
     zoomControl: true,
-      zoomControlOptions: {
-          position: google.maps.ControlPosition.TOP_LEFT
-      },
+    zoomControlOptions: {
+        position: google.maps.ControlPosition.TOP_LEFT
+    },
+    mapTypeControlOptions: {
+         position: google.maps.ControlPosition.TOP_RIGHT
+    },
+
   });
   // Setup autocomplete in the location searchbar
   initSearch()
@@ -115,7 +119,7 @@ function setMarkers() {
     markers.push(marker);
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function() {
-      // Placeholder for now, decided not to use this functionality
+      populateInfoWindow(this, hoverInfowindow, 'closeclick');
     });
     // Show the hoverInfoWindow when a mouseover happens on the marker.
     marker.addListener('mouseover', function() {

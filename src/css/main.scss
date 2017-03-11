@@ -55,7 +55,7 @@ button:focus {
 h2 a {
   color: #fff;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 0.45em;
   letter-spacing: 1px;
   text-decoration: none;
 
@@ -105,6 +105,10 @@ h2 a {
   }
 }
 
+#filter-btn {
+  display: none;
+}
+
 .input-text-group {
   position: relative;
 }
@@ -128,7 +132,6 @@ h2 a {
   width: 30vw;
   min-width: 300px;
   height: calc(100vh - 80px);
-  background-color: $sidebar-bg;
   box-shadow: 2px 0 20px $shadow-color;
   position: relative;
   z-index: 5;
@@ -192,9 +195,14 @@ h2 a {
   margin-bottom: 50px;
 }
 
+.hide {
+  display: none;
+}
+
 // FILTER RANGE STYLES
 
 .noUi-horizontal {
+  // display: none;
   height: 7px;
 }
 
@@ -259,7 +267,10 @@ h2 a {
 // RESULTS SYLES
 
 .results {
-  // overflow: scroll;
+  border-top: 1px solid #fff;
+  box-shadow: 0 -1px 3px rgba(#000, 0.15);
+  background-color: $sidebar-bg;
+  padding-top: 5px;
 }
 
 .result {
@@ -286,6 +297,7 @@ h2 a {
 .result-title {
   font: 500 1.05em 'Helvetica Neue';
   margin-bottom: 3px;
+  margin-right: 50px;
 }
 
 .result-subtitle {
@@ -314,6 +326,9 @@ h2 a {
   padding-top: 5px;
   width: 100%;
   border-top: solid 1px rgba($shadow-color, 0.6);
+  a:hover {
+      text-decoration: none;
+  }
 }
 
 .rating {
@@ -332,10 +347,28 @@ h2 a {
 
 // MAP STYLES
 
-.map {
+.map-container {
   width: calc(100% - 30vw);
   height: calc(100vh - 80px);
   min-width: 10vh;
-  position: relative;
+  flex: 2;
+  position: relative;;
   z-index: 1;
+}
+
+.search-area {
+  background-color: #fff;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(#000, 0.15);
+  color: #666666;
+  position: absolute;
+  padding: 10px;
+  top: 10px;
+  left: 45px;
+  z-index: 5;
+
+  &:hover {
+    color: #444;
+  }
 }

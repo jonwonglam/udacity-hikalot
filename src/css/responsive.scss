@@ -1,0 +1,67 @@
+@media screen and (max-width: 780px) {
+  .logo {
+    display: none;
+  }
+
+  .header-bar {
+    padding: 0;
+  }
+
+  h2 a {
+    display: none;
+  }
+
+  .header-search {
+    input {
+      border-radius: 5px;
+      width: 70vw;
+      min-width: 70vw;
+      height: 35px;
+    }
+
+    button {
+      display: none;
+    }
+  }
+
+  .map-container {
+    // opacity: 0.99;
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+  }
+
+  .sidebar {
+    // pointer-events: none;
+    width: 100%;
+    z-index: 2;
+  }
+
+  #filter-btn {
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-size: 1.3em;
+    color: rgba(#fff, 1);
+  }
+
+  .results-container {
+    // pointer-events: none;
+    margin-top: 55vh;
+    z-index: 1;
+  }
+
+  .results {
+    width: 100%;
+    z-index: 3;
+  }
+
+  .filters {
+    display: none;
+    z-index: 50;
+    position: fixed;
+    width: 100%;
+  }
+
+
+}

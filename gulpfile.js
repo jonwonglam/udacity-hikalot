@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),
     del = require('del');
+    order = require("gulp-order");
 
     gulp.task('default', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'move-js', 'watch']);
     gulp.task('production', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'min-js']);
@@ -19,7 +20,7 @@ var gulp = require('gulp'),
 // of requests the browser has to make.
 gulp.task('min-css', function() {
     return gulp.src('src/css/*.css')
-        .pipe(concat('styles.css'))
+        .pipe(concat('styles2.css'))
         .pipe(gulp.dest('dist/css'))
         .pipe(rename('styles.min.css'))
         .pipe(cleanCSS({
@@ -31,9 +32,6 @@ gulp.task('min-css', function() {
 gulp.task('min-sass', function() {
     return gulp.src('src/css/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(cleanCSS({
-            compatibility: '*'
-        }))
         .pipe(gulp.dest('src/css'));
 });
 
