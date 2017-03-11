@@ -331,5 +331,4 @@ var
 
 	/** @export */
 	window.wNumb = wNumb;
-
 }());

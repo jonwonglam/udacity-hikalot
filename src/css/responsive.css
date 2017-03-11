@@ -29,7 +29,8 @@
     position: absolute;
     right: 20px;
     font-size: 1.3em;
-    color: white; }
+    color: #fff;
+    background-color: none; }
   .results {
     width: 100%;
     height: auto;
