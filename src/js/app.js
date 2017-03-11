@@ -97,7 +97,7 @@ var Result = function(data) {
   this.checkinsFormat = checkinFormat.to(this.checkins) + ' checkins';
   this.url = data.venue.id;
   if (data.venue.featuredPhotos) {
-      this.imgSrc = data.venue.featuredPhotos.items[0].prefix + '600x600'+
+      this.imgSrc = data.venue.featuredPhotos.items[0].prefix + '100x100'+
     data.venue.featuredPhotos.items[0].suffix;
   } else {
     this.imgSrc = 'https://ss3.4sqi.net/img/categories_v2/parks_outdoors/hikingtrail_512.png';
