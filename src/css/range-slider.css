@@ -1,0 +1,52 @@
+.noUi-horizontal {
+  height: 7px; }
+
+.noUi-target {
+  background: #f0f0f0;
+  border-radius: 2px;
+  border: none; }
+
+.noUi-connect {
+  background: #4bc470;
+  box-shadow: none;
+  -webkit-transition: background 450ms;
+  transition: background 450ms; }
+
+.noUi-horizontal .noUi-handle {
+  width: 18px;
+  height: 18px;
+  left: -9px;
+  top: -6px; }
+
+.noUi-handle {
+  border: none;
+  border-radius: 100px;
+  background: #4bc470;
+  cursor: pointer;
+  box-shadow: 0 1px 3px #a8bad1; }
+
+.noUi-tooltip {
+  display: block;
+  border: none;
+  background: none;
+  position: absolute;
+  color: #4bc470;
+  font: 600 12px 'Helvetica Neue';
+  text-align: center;
+  padding: 10px;
+  width: 60px; }
+
+.noUi-horizontal .noUi-tooltip {
+  -webkit-transform: translate(-50%, 170%);
+  transform: translate(-50%, 170%); }
+
+.noUi-pips {
+  position: absolute;
+  color: #fff; }
+
+.noUi-marker-large {
+  background: #bababa; }
+
+.noUi-marker-horizontal.noUi-marker-large {
+  height: 4px;
+  width: 1px; }

@@ -1,0 +1,51 @@
+@media screen and (max-width: 780px) {
+  .logo {
+    display: none; }
+  .header-bar {
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    padding: 0;
+    z-index: 20; }
+  h2 a {
+    display: none; }
+  .header-search input {
+    border-radius: 5px;
+    width: 70vw;
+    min-width: 70vw;
+    height: 35px; }
+  .header-search button {
+    display: none; }
+  .map-container {
+    margin-top: 80px;
+    z-index: 1;
+    position: fixed;
+    width: 100%; }
+  .sidebar {
+    width: 100%;
+    z-index: 2; }
+  #filter-btn {
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-size: 1.3em;
+    color: white; }
+  .results {
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    margin-top: 0;
+    position: static;
+    z-index: 3; }
+  .filters {
+    margin-top: 80px;
+    transform: translateY(-50vh);
+    z-index: 10;
+    position: fixed;
+    width: 100%;
+    transition: transform 0.5s ease; }
+  .slide-in {
+    transform: translateY(0); }
+  .spacer {
+    width: 100%;
+    height: 70vh; } }

@@ -7,7 +7,7 @@ var App = function() {
   let CLIENT_SECRET = 'WJ0VZI2TE4AKYWPYQ11OASI0N3TXYYY52CZVEH12SX3EXX5X';
 
   // Variables to make a search request to the Foursquare API
-  this.location = '410 Winding Way, San Carlos, CA';
+  this.location = 'San Francisco, CA';
   this.query = 'trails'
   this.url = 'https://api.foursquare.com/v2/venues/explore?near=' + this.location +
       '&query=' + this.query + '&venuePhotos=1';
@@ -179,6 +179,10 @@ var ViewModel = function() {
   this.showMarker = function(result) {
     var index = result.id() - 1;
     populateInfoWindow(markers[index], largeInfowindow, 'closeclick');
+  }
+
+  this.toggleFilters = function() {
+    $('#filters').toggleClass('slide-in');
   }
 
   // This function will update the result IDs based off of their
