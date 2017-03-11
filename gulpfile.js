@@ -10,7 +10,6 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),
     del = require('del');
-    order = require("gulp-order");
 
     gulp.task('default', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'move-js', 'watch']);
     gulp.task('production', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'min-js']);
@@ -20,7 +19,7 @@ var gulp = require('gulp'),
 // of requests the browser has to make.
 gulp.task('min-css', function() {
     return gulp.src('src/css/*.css')
-        .pipe(concat('styles2.css'))
+        .pipe(concat('styles.css'))
         .pipe(gulp.dest('dist/css'))
         .pipe(rename('styles.min.css'))
         .pipe(cleanCSS({
@@ -49,11 +48,11 @@ gulp.task('move-js', function() {
 });
 
 gulp.task('min-js', function() {
-    return gulp.src('src/js/*.js')
+    return gulp.src(['src/**/!(app)*.js', 'src/js/app.js'])
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest('dist/js'))
         .pipe(rename('scripts.min.js'))
-        .pipe(uglify())
+        .pipe(uglify().on('error', gutil.log))
         .pipe(gulp.dest('dist/js'));
 });
 

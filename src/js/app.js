@@ -3,8 +3,8 @@
 var App = function() {
 
   // Client services to access the Foursquare API
-  let CLIENT_ID = '2SYJIYT3OKJD4KNMXRBQ0RZBM30PNNRZ3QRGPJB2LJKOYT21';
-  let CLIENT_SECRET = 'WJ0VZI2TE4AKYWPYQ11OASI0N3TXYYY52CZVEH12SX3EXX5X';
+  var CLIENT_ID = '2SYJIYT3OKJD4KNMXRBQ0RZBM30PNNRZ3QRGPJB2LJKOYT21';
+  var CLIENT_SECRET = 'WJ0VZI2TE4AKYWPYQ11OASI0N3TXYYY52CZVEH12SX3EXX5X';
 
   // Variables to make a search request to the Foursquare API
   this.location = 'San Francisco, CA';
@@ -121,7 +121,7 @@ var ViewModel = function() {
   this.parseResults = function(data) {
     console.log(data);
     // Set the results to the data we received in json form
-    let results = data.groups[0].items;
+    var results = data.groups[0].items;
     // Remove the previous items in resultList when doing a fresh search
     self.resultList.removeAll();
     // Populate the results
