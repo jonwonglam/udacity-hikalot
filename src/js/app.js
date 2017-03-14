@@ -1,7 +1,8 @@
+'use-strict';
+
 // The App function is separate from the ViewModal to organize code better.
 // It handles API requests as well as call initialization code.
 var App = function() {
-
   // Client services to access the Foursquare API
   var CLIENT_ID = '2SYJIYT3OKJD4KNMXRBQ0RZBM30PNNRZ3QRGPJB2LJKOYT21';
   var CLIENT_SECRET = 'WJ0VZI2TE4AKYWPYQ11OASI0N3TXYYY52CZVEH12SX3EXX5X';
@@ -15,19 +16,7 @@ var App = function() {
   // This function will load the map, setup the sidebar, and make a request
   // to the Foursquare API
   this.init = function() {
-    initHeader();
     this.makeRequest();
-  }
-
-  function initHeader() {
-    $('#location-input').keyup(function(event) {
-      if (event.keyCode == 13) {
-        searchPlace();
-      }
-    });
-    $('#location-btn').click(function() {
-      searchPlace();
-    })
   }
 
   // This function will add noUiSlider to the HTML as part of the app's initialization,
@@ -66,20 +55,30 @@ var App = function() {
   // This function will make a request to the Foursquare API and call
   // parseResults in the ViewModal instance.
   this.makeRequest = function() {
-    $.ajax({
-      method: 'GET',
-      url: this.url,
-      data: {
-        v: 20170101,
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET
+    // Create our AJAX request
+    var httpRequest = new XMLHttpRequest();
+    if (!httpRequest) {
+      alert("Sorry, can't connect to the Foursquare server");
+      return false;
+    }
+    // Setup the function to execute on result as well as error handling
+    httpRequest.onreadystatechange = function() {
+      if (httpRequest.readyState == XMLHttpRequest.DONE) {
+        if (httpRequest.status == 200) {
+          var response = JSON.parse(httpRequest.responseText);
+          viewModal.parseResults(response["response"]);
+          viewModal.sortByRating();
+          setMarkers(viewModal.resultList());   // From map.js, initialize the markers after data loaded
+        } else if (httpRequest.status == 400) {
+          alert('There was an error 400');
+        } else {
+          alert('Error, something other than 200 was returned');
+        }
       }
-    })
-      .done(function( msg ) {
-        viewModal.parseResults(msg.response);
-        viewModal.sortByRating();
-        setMarkers(viewModal.resultList());   // From map.js, initialize the markers after data loaded
-      });
+    };
+    // Once it's all setup, make the request
+    httpRequest.open('GET', this.url + '&v=20170101' + '&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET);
+    httpRequest.send();
   }
 };
 
@@ -112,7 +111,7 @@ var ViewModel = function() {
 
   // Our array to hold all the parsed results
   this.resultList = ko.observableArray([]);
-  this.filter = ko.observable("");
+  this.filter = ko.observable('');
 
   // This function will parse the json data object into result objects,
   // updating the resultList array as it goes.
@@ -132,7 +131,7 @@ var ViewModel = function() {
   // Filter functions: they will sort by a criteria and update
   // the result IDs and set the CSS on buttons.
   this.sortByRating = function() {
-    setBtnClasses('#ratingsBtn');
+    setBtnClasses('ratingsBtn');
     self.resultList.sort(function(a, b) {
       return (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
     });
@@ -141,8 +140,7 @@ var ViewModel = function() {
   }
 
   this.sortByCheckins = function() {
-    setBtnClasses('#checkinsBtn');
-    $('#checkinsBtn').addClass('filter-btn-selected');
+    setBtnClasses('checkinsBtn');
     self.resultList.sort(function(a,b) {
       return (a.checkins === b.checkins) ? 0 : (a.checkins > b.checkins ? -1 : 1);
     });
@@ -184,15 +182,22 @@ var ViewModel = function() {
     self.filter("");
   }
 
+  this.search = function() {
+    searchPlace();
+  }
+
   // This function will display the marker given a result index.
   // Triggered by clicking a result in the sidebar.
   this.showMarker = function(result) {
     var index = result.id() - 1;
+    animateMarker(index);
     populateInfoWindow(markers[index], largeInfowindow, 'closeclick');
   }
 
+  // This function will toggle the slide-in animation for the filter module
+  // which happens on a small screen.
   this.toggleFilters = function() {
-    $('#filters').toggleClass('slide-in');
+    document.getElementById('filters').classList.toggle('slide-in');
   }
 
   // This function will update the result IDs based off of their
@@ -212,10 +217,10 @@ var checkinFormat = wNumb({
 // Helper function removes selected class from buttons and adds it
 // to the button id passed in.
 function setBtnClasses(selectedBtn) {
-  $('#ratingsBtn').removeClass('filter-btn-selected');
-  $('#checkinsBtn').removeClass('filter-btn-selected');
-  $('#trailLengthBtn').removeClass('filter-btn-selected');
-  $(selectedBtn).addClass('filter-btn-selected');
+  document.getElementById('ratingsBtn').classList.remove('filter-btn-selected');
+  document.getElementById('checkinsBtn').classList.remove('filter-btn-selected');
+  document.getElementById('trailLengthBtn').classList.remove('filter-btn-selected');
+  document.getElementById(selectedBtn).classList.add('filter-btn-selected');
 }
 
 // Setup and start our App and ViewModal instances.

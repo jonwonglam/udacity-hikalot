@@ -3,6 +3,7 @@ var map;
 var markers = [];
 var largeInfowindow, hoverInfowindow;
 var autocomplete, geocoder;
+var bounds;
 
 // Function is called when the maps API script is loaded
 function initMap() {
@@ -18,7 +19,10 @@ function initMap() {
     mapTypeControlOptions: {
          position: google.maps.ControlPosition.TOP_RIGHT
     },
-
+  });
+  bounds = new google.maps.LatLngBounds();
+  google.maps.event.addDomListener(window, 'resize', function() {
+    if (bounds) {map.fitBounds(bounds)};
   });
   // Setup autocomplete in the location searchbar
   initSearch()
@@ -37,30 +41,16 @@ function searchPlace() {
   largeInfowindow.close();
 
   // Lookup address and get lat lng
-  var val = $('#location-input').val();
+  var val = document.getElementById('location-input').value;
   geocodeAddress(val, geocoder, map, app);
-
-  // // If the place has a geometry, then present it on a map.
-  // if (place.geometry.viewport) {
-  //   console.log("setting viewport");
-  //   map.fitBounds(place.geometry.viewport);
-  // } else {
-  //   console.log("setting map");
-  //   map.setCenter(place.geometry.location);
-  //   map.setZoom(17);  // Why 17? Because it looks good.
-  // }
 }
 
 function geocodeAddress(address, geocoder, resultsMap, app) {
   geocoder.geocode({'address': address}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
-      // resultsMap.setCenter(results[0].geometry.location);
       app.location = results[0].formatted_address;
-      console.log(app.location);
       app.url = 'https://api.foursquare.com/v2/venues/explore?near=' + app.location +
           '&query=' + app.query + '&venuePhotos=1';
-
-      console.log(app.url);
       app.makeRequest();
     } else {
       alert("Sorry, Google couldn't find that location.");
@@ -74,10 +64,6 @@ function setMarkers(list, doZoom) {
   if (doZoom === undefined) {
     doZoom = true;
   }
-  // Bounds is used to fit the map view to include all our markers
-  var bounds = new google.maps.LatLngBounds();
-  // InfoWindow that is shown on mouseover events
-  hoverInfowindow = new google.maps.InfoWindow();
   // InfoWindow that is shown on sidebar click events
   largeInfowindow = new google.maps.InfoWindow();
   // Our custom marker icon
@@ -120,11 +106,12 @@ function setMarkers(list, doZoom) {
     markers.push(marker);
     // Create an onclick event to open an infowindow at each marker.
     marker.addListener('click', function() {
-      populateInfoWindow(this, hoverInfowindow, 'closeclick');
+      animateMarker(-1, this);
+      populateInfoWindow(this, largeInfowindow, 'closeclick');
     });
     // Show the hoverInfoWindow when a mouseover happens on the marker.
     marker.addListener('mouseover', function() {
-      populateInfoWindow(this, hoverInfowindow, 'mouseout');
+      // populateInfoWindow(this, hoverInfowindow, 'mouseout');
     });
     bounds.extend(markers[i].position);
   }
@@ -135,8 +122,7 @@ function setMarkers(list, doZoom) {
 // This function will show the infoWindow for a given marker. We also
 // specify the close event here.
 function populateInfoWindow(marker, infoWindow, onCloseEvent) {
-  // Always close the existing infowindows first
-  hoverInfowindow.close();
+  // Always close the existing infowindow first
   largeInfowindow.close();
   // Set the infoWindow on the marker
   infoWindow.marker = marker;
@@ -172,6 +158,17 @@ function populateInfoWindow(marker, infoWindow, onCloseEvent) {
     // attached to the infowindow as well.
     infoWindow.marker = null;
   })
+}
+
+// Can pass in an index or a marker.
+function animateMarker(index, marker) {
+  var marker = markers[index] || marker;
+  if (marker) {
+    marker.setAnimation(google.maps.Animation.BOUNCE)
+    window.setTimeout(function() {
+      marker.setAnimation(null);
+    }, 500);
+  }
 }
 
 // Sets the map on all markers in the array.
