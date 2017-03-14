@@ -12,7 +12,7 @@ var gulp = require('gulp'),
     del = require('del');
 
     gulp.task('default', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'move-js', 'watch']);
-    gulp.task('production', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'min-js']);
+    gulp.task('production', ['clean:dist', 'min-sass', 'min-css', 'min-html', 'min-js', 'watch-production']);
 
 // min-css will concatinate all the css files in src/css, clean it,
 // and minify it, renamed to styles.min.css. This is to reduce the number
@@ -66,5 +66,12 @@ gulp.task('watch', function() {
     gulp.watch('src/css/*.scss', ['min-sass']);
     gulp.watch('src/css/*.css', ['min-css']);
     gulp.watch('src/js/*.js', ['move-js']);
+    gulp.watch('src/*.html', ['min-html']);
+});
+
+gulp.task('watch-production', function() {
+    gulp.watch('src/css/*.scss', ['min-sass']);
+    gulp.watch('src/css/*.css', ['min-css']);
+    gulp.watch('src/js/*.js', ['min-js']);
     gulp.watch('src/*.html', ['min-html']);
 });

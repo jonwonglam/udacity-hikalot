@@ -21,10 +21,8 @@
     z-index: 1;
     position: fixed;
     width: 100%; }
-  .sidebar {
-    width: 100%;
-    z-index: 2; }
   #filter-btn {
+    border: none;
     display: block;
     position: absolute;
     right: 20px;
@@ -38,6 +36,14 @@
     margin-top: 0;
     position: static;
     z-index: 3; }
+  .result-title {
+    font-size: 1.3em; }
+  .result-subtitle {
+    font-size: 0.9em; }
+  .result-details {
+    font-size: 1.0em; }
+  .rating {
+    font-size: 1.1em; }
   .filters {
     margin-top: 80px;
     transform: translateY(-50vh);
