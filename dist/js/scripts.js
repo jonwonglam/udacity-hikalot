@@ -3014,6 +3014,7 @@ var ViewModel = function() {
     var index = result.id() - 1;
     animateMarker(index);
     populateInfoWindow(markers[index], largeInfowindow, 'closeclick');
+    scrollToTop();
   }
 
   // This function will toggle the slide-in animation for the filter module
@@ -3043,6 +3044,12 @@ function setBtnClasses(selectedBtn) {
   document.getElementById('checkinsBtn').classList.remove('filter-btn-selected');
   document.getElementById('trailLengthBtn').classList.remove('filter-btn-selected');
   document.getElementById(selectedBtn).classList.add('filter-btn-selected');
+}
+
+function scrollToTop() {
+  if (window.innerWidth < 780) {
+    window.scrollTo(0, 0);
+  }
 }
 
 // Setup and start our App and ViewModal instances.
