@@ -24,8 +24,16 @@ function initMap() {
   google.maps.event.addDomListener(window, 'resize', function() {
     if (bounds) {map.fitBounds(bounds)};
   });
+  // InfoWindow that is shown on sidebar click events
+  largeInfowindow = new google.maps.InfoWindow();
   // Setup autocomplete in the location searchbar
   initSearch()
+}
+
+// Function that gets called as an html attribute if the api is unable
+// to be reached.
+function loadError() {
+  alert("Google maps was unable to be loaded!");
 }
 
 function initSearch() {
@@ -35,13 +43,11 @@ function initSearch() {
   geocoder = new google.maps.Geocoder();
 }
 
-function searchPlace() {
+function searchPlace(val) {
   // Close the any infowindos that are open
-  hoverInfowindow.close();
   largeInfowindow.close();
 
   // Lookup address and get lat lng
-  var val = document.getElementById('location-input').value;
   geocodeAddress(val, geocoder, map, app);
 }
 
@@ -60,12 +66,7 @@ function geocodeAddress(address, geocoder, resultsMap, app) {
 
 // Reset and populate marker list, pulling data from resultList in
 // the ViewModal. Accessing it globally to save time copying it over.
-function setMarkers(list, doZoom) {
-  if (doZoom === undefined) {
-    doZoom = true;
-  }
-  // InfoWindow that is shown on sidebar click events
-  largeInfowindow = new google.maps.InfoWindow();
+function setMarkers(list) {
   // Our custom marker icon
   var locationIcon = {
         anchor: new google.maps.Point(11,17),
@@ -77,6 +78,8 @@ function setMarkers(list, doZoom) {
         strokeWeight: 1,
         labelOrigin: new google.maps.Point(10, 8)
       };
+  // Reset bounds variable
+  bounds = new google.maps.LatLngBounds();
   // Clear the markers array before repopulating it
   deleteMarkers();
   // Use results from resultList to populate marker information.
@@ -116,7 +119,7 @@ function setMarkers(list, doZoom) {
     bounds.extend(markers[i].position);
   }
   // Extend the boundaries of the map for each marker if zoom option is set
-  if (doZoom) {map.fitBounds(bounds)};
+  map.fitBounds(bounds);
 }
 
 // This function will show the infoWindow for a given marker. We also
@@ -168,6 +171,21 @@ function animateMarker(index, marker) {
     window.setTimeout(function() {
       marker.setAnimation(null);
     }, 500);
+  }
+}
+
+// Hides markers that aren't found in the passed in array
+function hideMarkers(array) {
+  var validMarker = false;
+  for (var i = 0; i < markers.length; i++) {
+    for (var j = 0; j < array.length; j++) {
+      if (markers[i].name === array[j].title) {
+        validMarker = true;
+        break;
+      }
+    }
+    validMarker ? markers[i].setVisible(true) : markers[i].setVisible(false);
+    validMarker = false;
   }
 }
 

@@ -15,7 +15,7 @@
           <h1 class="logo p-2">Hikalot</h1>
           <div class="header-search input-group">
             <form class="input-text-group" data-bind="submit: search">
-              <input id="location-input" type="text" placeholder="I want to hike near...">
+              <input id="location-input" type="text" data-bind="textInput: userLocation" placeholder="I want to hike near...">
             </form>
             <button id="location-btn" class="btn" data-bind="click: search"><i class="fa fa-search" aria-hidden="true"></i></button>
           </div>
@@ -39,10 +39,10 @@
             <input class="filter-input-text" data-bind="value: filter, valueUpdate: 'afterkeydown'" type="text" placeholder="Name...">
             <span class="input-text-icon" data-bind="click: clearFilter"><i class="fa fa-times" aria-hidden="true"></i></span>
           </div>
-      </aside>
+        </aside>
       <div class="spacer"></div>
       <main id="results" class="results" data-bind="foreach: filteredItems">
-        <articl class="result d-flex" data-bind="click: $parent.showMarker">
+        <article class="result d-flex" data-bind="click: $parent.showMarker">
           <img class="result-img" data-bind="attr: { src: imgSrc}" alt="result picture">
           <div class="result-text-container">
             <h3 class="result-title" data-bind="text: id() + '. ' + $data.title"></h3>
@@ -60,7 +60,6 @@
       </main>
       <div class="map-container">
         <div id="map" style="width: 100%; height: 100%"></div>
-        <!-- <button id="search-area-btn" class="search-area"><i class="fa fa-repeat" aria-hidden="true"></i></button> -->
       </div>
     </div>
 
@@ -70,7 +69,8 @@
     <!-- <script src="js/map.js"></script> -->
     <!-- <script src="js/app.js"></script> -->
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6i-RpAAVY9ArUTiDD6kd9Bzk_d-urzo&v=3&libraries=places&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6i-RpAAVY9ArUTiDD6kd9Bzk_d-urzo&v=3&libraries=places&callback=initMap"
+        onerror="loadError()">
     </script>
   </body>
 </html>

@@ -111,6 +111,7 @@ var ViewModel = function() {
 
   // Our array to hold all the parsed results
   this.resultList = ko.observableArray([]);
+  this.userLocation = ko.observable('');
   this.filter = ko.observable('');
 
   // This function will parse the json data object into result objects,
@@ -152,7 +153,7 @@ var ViewModel = function() {
   // to the google maps marker's list
   ko.extenders.notifyMarkers = function(target) {
     target.subscribe(function(array) {
-      setMarkers(array, false);
+      hideMarkers(array);
     });
     return target;
   }
@@ -175,15 +176,15 @@ var ViewModel = function() {
     }
   }, this)
     // Add our subscriber and limit the function to run once every 50ms
-    .extend({notifyMarkers: "", rateLimit: 50});
+    .extend({notifyMarkers: '', rateLimit: 50});
 
   // Helper function that sets the filter input box value to ""
   this.clearFilter = function() {
-    self.filter("");
+    self.filter('');
   }
 
   this.search = function() {
-    searchPlace();
+    searchPlace(this.userLocation());
   }
 
   // This function will display the marker given a result index.
