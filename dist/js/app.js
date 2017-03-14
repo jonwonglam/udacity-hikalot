@@ -16,7 +16,6 @@ var App = function() {
   // to the Foursquare API
   this.init = function() {
     initHeader();
-    // initSidebar();
     this.makeRequest();
   }
 
@@ -79,7 +78,7 @@ var App = function() {
       .done(function( msg ) {
         viewModal.parseResults(msg.response);
         viewModal.sortByRating();
-        setMarkers();   // From map.js, initialize the markers after data loaded
+        setMarkers(viewModal.resultList());   // From map.js, initialize the markers after data loaded
       });
   }
 };
@@ -87,7 +86,6 @@ var App = function() {
 // The Result functional object takes in a json object from
 // Foursquare's API and parses it for the app to use.
 var Result = function(data) {
-  // console.log(data);
   this.id = ko.observable(0);
   this.title = data.venue.name;
   this.address = data.venue.location.address || 'No address';
@@ -139,7 +137,7 @@ var ViewModel = function() {
       return (a.rating === b.rating) ? 0 : (a.rating > b.rating ? -1 : 1);
     });
     updateResultID();
-    setMarkers();
+    setMarkers(self.resultList());
   }
 
   this.sortByCheckins = function() {
@@ -149,7 +147,16 @@ var ViewModel = function() {
       return (a.checkins === b.checkins) ? 0 : (a.checkins > b.checkins ? -1 : 1);
     });
     updateResultID();
-    setMarkers();
+    setMarkers(self.resultList());
+  }
+
+  // This function will intercept the filteredItems.computed and pass it on
+  // to the google maps marker's list
+  ko.extenders.notifyMarkers = function(target) {
+    target.subscribe(function(array) {
+      setMarkers(array, false);
+    });
+    return target;
   }
 
   // This function will update our filteredItems list everytime the filter
@@ -168,8 +175,11 @@ var ViewModel = function() {
         return result.title.toLowerCase().includes(filter);
       });
     }
-  }, this);
+  }, this)
+    // Add our subscriber and limit the function to run once every 50ms
+    .extend({notifyMarkers: "", rateLimit: 50});
 
+  // Helper function that sets the filter input box value to ""
   this.clearFilter = function() {
     self.filter("");
   }

@@ -22,8 +22,6 @@ function initMap() {
   });
   // Setup autocomplete in the location searchbar
   initSearch()
-  // Populate the marker list now that the map is loaded.
-  setMarkers();
 }
 
 function initSearch() {
@@ -72,7 +70,10 @@ function geocodeAddress(address, geocoder, resultsMap, app) {
 
 // Reset and populate marker list, pulling data from resultList in
 // the ViewModal. Accessing it globally to save time copying it over.
-function setMarkers() {
+function setMarkers(list, doZoom) {
+  if (doZoom === undefined) {
+    doZoom = true;
+  }
   // Bounds is used to fit the map view to include all our markers
   var bounds = new google.maps.LatLngBounds();
   // InfoWindow that is shown on mouseover events
@@ -94,9 +95,9 @@ function setMarkers() {
   deleteMarkers();
   // Use results from resultList to populate marker information.
   var result;
-  for (var i = 0; i < viewModal.resultList().length; i++) {
+  for (var i = 0; i < list.length; i++) {
     // Create a local copy for easy access
-    result = viewModal.resultList()[i];
+    result = list[i];
     // Create a new marker for each result
     var marker = new google.maps.Marker({
       map: map,
@@ -127,8 +128,8 @@ function setMarkers() {
     });
     bounds.extend(markers[i].position);
   }
-  // Extend the boundaries of the map for each marker
-  map.fitBounds(bounds);
+  // Extend the boundaries of the map for each marker if zoom option is set
+  if (doZoom) {map.fitBounds(bounds)};
 }
 
 // This function will show the infoWindow for a given marker. We also

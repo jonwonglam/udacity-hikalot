@@ -118,7 +118,7 @@ h2 a {
 
 .filter-title {
   color: #8d8d8d;
-  font: 500 0.8em 'Helvetica Neue';
+  font: 500 0.8em 'Helvetica Neue', sans-serif;
   text-transform: uppercase;
   padding-top: 20px; }
 
@@ -128,7 +128,7 @@ h2 a {
   background-color: rgba(229, 232, 237, 0.6);
   color: #6d6e70;
   cursor: pointer;
-  font: 500 0.9em 'Helvetica Neue';
+  font: 500 0.9em 'Helvetica Neue', sans-serif;
   padding: 8px 15px;
   margin-right: 5px; }
   .filter-btn:hover {
@@ -192,19 +192,19 @@ h2 a {
   height: 4vw; }
 
 .result-title {
-  font: 500 1.05em 'Helvetica Neue';
+  font: 500 1.05em 'Helvetica Neue', sans-serif;
   margin-bottom: 3px;
   margin-right: 50px; }
 
 .result-subtitle {
   color: #8d8d8d;
-  font: 400 0.8em 'Helvetica Neue'; }
+  font: 400 0.8em 'Helvetica Neue', sans-serif; }
 
 .result-details {
   margin-top: 5px; }
   .result-details h5 {
     color: #4bc470;
-    font: 400 0.8em 'Helvetica Neue';
+    font: 400 0.8em 'Helvetica Neue', sans-serif;
     padding-right: 20px; }
 
 .result-icon {
