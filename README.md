@@ -16,7 +16,7 @@ Requirements: [Node.js](https://nodejs.org/en/) must be installed for the npm pa
     $> cd your_folder/udacity-hikalot
     ```
 3. Run `npm install` to get all the required dependencies.
-4. Run `gulp` to start the build tools.
+4. Run `gulp production` to start the build tools.
 5. Open `dist/index.html`.
 
 # About Hikalot
