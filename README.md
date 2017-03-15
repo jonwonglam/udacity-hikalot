@@ -64,6 +64,8 @@ After detailing all the components, I would run through a loosely created use-ca
 
 After getting the details done, I moved on to turning the requirements into a layout. Photoshop was the tool I primarily used to create the mockup, but I also learned that you save a lot of time by getting most of the layout done on paper. It took me about a third of the time to figure out the layout via sketching compared to figuring it out in Photoshop. Once the layout was done on paper, it was pretty straightforward to make it look good in Photoshop.
 
+![alt tag](./hikalot-ui.jpg)
+
 **Coding**
 
 This is where I am at now, but the basic plan I'm following is to:
@@ -73,3 +75,13 @@ This is where I am at now, but the basic plan I'm following is to:
 3. Setup inputs, tied to Knockout.js
 4. Basic Results with dummy data
 5. Incorperate Yelp and Foursquare APIs
+
+**Issues**
+
+* The filter button doesn't style correctly on the Safari iOS browser
+
+**Looking Back**
+
+It was a little ambitious to include as many features as it had. The current location ended up getting cut out as it wasn't a required feature. Also, sadly the trail length ended up getting chopped in the final version, although the code for filtering it is there. I ended up not inplementing the Yelp API as it required OAuth requests through a server; I learned it's not a good idea to do this client-side for security reasons.
+
+I would have liked to try a TDD approach the next time around (it was the next project after this one). Overall a fun learning experience to go through the whole design to code. 
